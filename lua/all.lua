@@ -143,3 +143,20 @@ add {
 }
 
 require('myflexoki')
+
+add {
+    source = "xiyaowong/transparent.nvim",
+    name   = "transparent",
+}
+
+vim.g.transparent_groups = vim.list_extend(
+    vim.g.transparent_groups or {},
+    {"Folded", "NormalFloat", "FloatBorder"}
+)
+
+add {
+    source = "chrisgrieser/nvim-origami",
+    name   = "origami",
+}
+
+require("origami").setup()

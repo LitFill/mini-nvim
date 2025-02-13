@@ -16,8 +16,10 @@ vim.opt.termguicolors  = true          -- Enable true color
 vim.opt.cursorline     = true          -- Highlight baris kursor
 vim.opt.mouse          = 'a'           -- Enable mouse
 vim.opt.clipboard      = 'unnamedplus' -- Sync dengan clipboard sistem
+vim.opt.scrolloff      = 8             -- memudahkan melihat dokumen
 
 -- Opsi khusus
 vim.opt.undofile   = true  -- Simpan undo history
 vim.opt.splitright = true  -- Split vertical ke kanan
 vim.opt.splitbelow = true  -- Split horizontal ke bawah
+vim.opt.foldmethod = "indent"
