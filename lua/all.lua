@@ -160,3 +160,10 @@ add {
 }
 
 require("origami").setup()
+
+-- add {
+--     source = "anuvyklack/pretty-fold.nvim",
+--     name   = "pretty-fold"
+-- }
+--
+-- require("pretty-fold").setup()
