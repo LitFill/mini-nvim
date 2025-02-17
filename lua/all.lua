@@ -1,3 +1,5 @@
+---@diagnostic disable: undefined-global
+
 local enabled_modules = {
     'git',
     'diff',
@@ -160,6 +162,13 @@ add {
 }
 
 require("origami").setup()
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+    pattern = "*",
+    callback = function()
+        MiniTrailspace.trim()
+    end
+})
 
 -- add {
 --     source = "anuvyklack/pretty-fold.nvim",
