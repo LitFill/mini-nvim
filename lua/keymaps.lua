@@ -10,24 +10,28 @@ local set = vim.keymap.set
 -- end
 
 -- convenient
-set({ "i", "t" }, "jk", "<Esc>", { nowait = true, desc = "exit to normal" })
-set("n", "<leader>qw", "<cmd>wq<CR>", { desc = "save and quit" })
+set("n", "<leader>qw", "<cmd>wq<CR>",   { desc = "save and quit" })
+set("n", "<Esc>",      "<cmd>nohl<CR>", { silent = true          })
+
+set({ "i", "n" }, "<C-s>", "<cmd>write<CR>", {desc = "save"})
+
+set({"i", "t", "v"}, "jk", "<Esc>", { nowait = true, desc = "exit to normal" })
 
 -- using makefile
-set("n", "<leader>mr",  "<cmd>term make run<CR>",        { desc = "(m)ake (r)un" })
+set("n", "<leader>mr",  "<cmd>term make run<CR>",        { desc = "(m)ake (r)un"   })
 set("n", "<leader>mb",  "<cmd>term make build<CR>",      { desc = "(m)ake (b)uild" })
-set("n", "<leader>mqb", "<cmd>term make build<CR>a<CR>", { desc = "quick build" })
+set("n", "<leader>mqb", "<cmd>term make build<CR>a<CR>", { desc = "quick build"    })
 
 set("n", "<leader>pv", vim.cmd.Ex, { desc = "preview pwd" })
 
 set("v", "J", ":m '>+1<CR>gv=gv")
 set("v", "K", ":m '<-2<CR>gv=gv")
 
-set("n", "J",     "mzJ`z")
+set("n", "J",     "mzJ`z"  )
 set("n", "<C-d>", "<C-d>zz")
 set("n", "<C-u>", "<C-u>zz")
-set("n", "n",     "nzz")
-set("n", "N",     "Nzz")
+set("n", "n",     "nzz"    )
+set("n", "N",     "Nzz"    )
 
 set({ "n", "v" }, "<leader>d", [["_d]])
 
@@ -37,10 +41,10 @@ set({ "n", "v" }, "<leader>d", [["_d]])
 -- set("n", "<leader>j", "<cmd>lprev<CR>zz")
 
 set(
-	"n",
-	"<leader>rw",
-	[[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
-	{ desc = "(r)eplace (w)ord" }
+    "n",
+    "<leader>rw",
+    [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
+    { desc = "(r)eplace (w)ord" }
 )
 
 set("n", "-", "<cmd>lua MiniFiles.open()<CR>", { desc = "Open parent dir" })
@@ -49,18 +53,26 @@ set("n", "-", "<cmd>lua MiniFiles.open()<CR>", { desc = "Open parent dir" })
 
 set("t", "<C-q>", "<C-\\><C-n>", { nowait = true })
 set(
-	"n",
-	"<leader>ot",
-	"<cmd>term<CR><cmd>set nonumber norelativenumber<CR>a",
-	{ desc = "(o)pen (t)erminal" }
+    "n",
+    "<leader>ot",
+    "<cmd>term<CR><cmd>set nonumber norelativenumber<CR>a",
+    { desc = "(o)pen (t)erminal" }
 )
 
 -- mini.pick
 set("n", "<leader>pb", "<cmd>Pick buffers<CR>", { desc = "(p)ick (b)uffers" })
-set("n", "<leader>pf", "<cmd>Pick files<CR>",   { desc = "(p)ick (f)iles" })
+set("n", "<leader>pf", "<cmd>Pick files<CR>",   { desc = "(p)ick (f)iles"   })
 
 -- NeoGit
 set("n", "<leader>gn", "<cmd>Neogit<CR>", { desc = "open NeoGit" })
+
+-- LSP
+set(
+    "n",
+    "<leader>ca",
+    "<cmd>lua vim.lsp.buf.code_action()<CR>",
+    { desc = "(c)ode (a)ction LSP" }
+)
 
 -- Typst Preview
 -- set("n", "<leader>tp", "<cmd>TypstPreviewToggle<CR>", { desc = "Toggle Typst Preview in browser" })
