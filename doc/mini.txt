@@ -1,0 +1,16 @@
+==============================================================================
+------------------------------------------------------------------------------
+                                                               *enabled_modules*
+                               `enabled_modules`
+list of mini.nvim family ofplugins I want to be activated
+Type ~
+`(string[])`
+
+------------------------------------------------------------------------------
+                                                                           *add*
+                                     `add`
+Type ~
+`(function(plugin:)` { source: string })
+
+
+ vim:tw=78:ts=8:noet:ft=help:norl:
