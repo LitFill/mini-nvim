@@ -305,3 +305,6 @@ add {
         'echasnovski/mini.nvim'
     },
 }
+
+add(require "plugins.nvim-focus")
+require("focus").setup()
