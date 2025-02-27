@@ -112,6 +112,33 @@ require('mason').setup()
 local lsp = require 'lspconfig'
 lsp.lua_ls.setup {}
 -- lsp.hls.setup {}
+lsp.unison.setup {
+    on_attach = function(_, bufnr)
+        vim.o.signcolumn = 'yes'
+        vim.o.updatetime = 250
+        vim.diagnostic.config { virtual_text = false }
+
+        vim.api.nvim_create_autocmd("CursorHold", {
+            buffer   = bufnr,
+            callback = function()
+                local opts = {
+                    focusable    = false,
+                    close_events = {
+                        "BufLeave",
+                        "CursorMoved",
+                        "InsertEnter",
+                        "FocusLost",
+                    },
+                    border = 'rounded',
+                    source = 'always',
+                    prefix = ' ',
+                    scope  = 'cursor',
+                }
+                vim.diagnostic.open_float(nil, opts)
+            end
+        })
+    end
+}
 
 add {
 	source   = 'nvim-treesitter/nvim-treesitter',
