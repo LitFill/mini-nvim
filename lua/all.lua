@@ -285,7 +285,8 @@ function GetShortPath()
     end
 
     -- Format path menggunakan '->' sebagai separator
-    local display_path = buf_path:gsub("/", " -> ")
+    local display_path1 = buf_path:gsub("//", "/")
+    local display_path  = display_path1:gsub("/", " -> ")
 
     return "%#Normal#  LitFill :: " .. display_path
 end
