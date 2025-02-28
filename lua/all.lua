@@ -99,7 +99,7 @@ require "keymaps"
 -- local now   = MiniDeps.now
 -- local later = MiniDeps.later
 
----@param plugin { source: string, name?: string, depends?: string | string[] }
+---@param plugin string | { source: string, name?: string, depends?: string | string[] }
 local function add(plugin)
     MiniDeps.add(plugin)
 end
@@ -142,15 +142,7 @@ lsp.unison.setup {
     end
 }
 
-add {
-	source   = 'nvim-treesitter/nvim-treesitter',
-	checkout = 'master',
-	monitor  = 'main',
-	hooks    = {
-	    post_checkout = function() vim.cmd('TSUpdate') end
-	},
-}
-
+add(require "plugins.nvim-treesitter")
 require('nvim-treesitter.configs').setup {
 	ensure_installed = {
 	    'lua',
@@ -160,42 +152,16 @@ require('nvim-treesitter.configs').setup {
 	highlight = { enable = true },
 }
 
-add {
-	source  = "NeogitOrg/neogit",
-	depends = {
-		"nvim-lua/plenary.nvim", -- required
-		-- "sindrets/diffview.nvim", -- optional - Diff integration
-		-- "nvim-telescope/telescope.nvim", -- optional
-	},
-	config  = true,
-}
+add(require "plugins.neogit")
 
-add {
-    source = "rafamadriz/friendly-snippets"
-}
+add "rafamadriz/friendly-snippets"
 
-add {
-	source = "nuvic/flexoki-nvim",
-	name   = "flexoki",
-}
-
+add(require "plugins.flexoki")
 require('myflexoki')
 
-add {
-    source = "xiyaowong/transparent.nvim",
-    name   = "transparent",
-}
+add(require "plugins.transparent")
 
-vim.g.transparent_groups = vim.list_extend(
-    vim.g.transparent_groups or {},
-    {"Folded", "NormalFloat", "FloatBorder"}
-)
-
-add {
-    source = "chrisgrieser/nvim-origami",
-    name   = "origami",
-}
-
+add(require "plugins.nvim-origami")
 require("origami").setup()
 
 vim.api.nvim_create_autocmd("BufWritePre", {
@@ -299,14 +265,7 @@ vim.api.nvim_create_autocmd('BufEnter', {
     callback = function() vim.opt.scrolloff = 8 end
 })
 
-add {
-    source = "MeanderingProgrammer/render-markdown.nvim",
-    name   = "render-markdown",
-    depends = {
-        'nvim-treesitter/nvim-treesitter',
-        'echasnovski/mini.nvim'
-    },
-}
+add(require "plugins.render-markdown")
 
 add(require "plugins.nvim-focus")
 require("focus").setup()
