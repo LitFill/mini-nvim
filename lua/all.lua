@@ -99,8 +99,10 @@ require "keymaps"
 -- local now   = MiniDeps.now
 -- local later = MiniDeps.later
 
----@type function(plugin: { source: string })
-local add = MiniDeps.add
+---@param plugin { source: string, name?: string, depends?: string | string[] }
+local function add(plugin)
+    MiniDeps.add(plugin)
+end
 
 add {
     source  = 'neovim/nvim-lspconfig',
