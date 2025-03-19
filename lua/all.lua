@@ -281,3 +281,19 @@ add(require "plugins.render-markdown")
 
 add(require "plugins.nvim-focus")
 require("focus").setup()
+
+vim.api.nvim_create_user_command("WithUnison", function(opts)
+    local filename = opts.args
+    local win      = vim.api.nvim_get_current_win()
+    vim.cmd("vsplit")
+    vim.cmd("term ucm")
+    vim.defer_fn(function()
+        vim.api.nvim_set_current_win(win)
+        vim.cmd("e " .. vim.fn.fnameescape(filename))
+    end, 200)
+end, { nargs = 1 })
+
+add(require "plugins.todo-comments")
+---@diagnostic disable-next-line: different-requires
+require("todo-comments").setup()
+
