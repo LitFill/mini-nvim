@@ -74,6 +74,12 @@ set(
     "<cmd>lua vim.lsp.buf.code_action()<CR>",
     { desc = "(c)ode (a)ction LSP" }
 )
+set(
+    "n",
+    "<leader>rn",
+    "<cmd>lua vim.lsp.buf.rename()<CR>",
+    { desc = "rename using lsp" }
+)
 
 -- Typst Preview
 -- set("n", "<leader>tp", "<cmd>TypstPreviewToggle<CR>", { desc = "Toggle Typst Preview in browser" })
