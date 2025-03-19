@@ -1,3 +1,4 @@
+local vim = vim
 local set = vim.keymap.set
 
 -- --- add desc to opts for set
