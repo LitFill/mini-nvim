@@ -16,7 +16,7 @@ set("n", "<Esc>",      "<cmd>nohl<CR>", { silent = true          })
 
 set({ "i", "n" }, "<C-s>", "<cmd>write<CR>", {desc = "save"})
 
-set({"i", "t", "v"}, "jk", "<Esc>", { nowait = true, desc = "exit to normal" })
+set({"i", "t", "v"}, "kj", "<Esc>", { desc = "exit to normal" })
 
 -- using makefile
 set("n", "<leader>mr",  "<cmd>term make run<CR>",        { desc = "(m)ake (r)un"   })
