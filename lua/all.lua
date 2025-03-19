@@ -142,6 +142,23 @@ lsp.unison.setup {
     end
 }
 
+lsp.denols.setup {
+    root_dir = lsp.util.root_pattern("deno.json", "deno.jsonc"),
+    init_options = {
+        lint = true,
+        unstable = true,
+    },
+}
+
+-- lsp.denols.setup {}
+
+vim.g.markdown_fenced_languages = {
+    "ts=typescript"
+}
+
+add(require "plugins.flexoki")
+require('myflexoki')
+
 add(require "plugins.nvim-treesitter")
 require('nvim-treesitter.configs').setup {
 	ensure_installed = {
@@ -155,9 +172,6 @@ require('nvim-treesitter.configs').setup {
 add(require "plugins.neogit")
 
 add "rafamadriz/friendly-snippets"
-
-add(require "plugins.flexoki")
-require('myflexoki')
 
 add(require "plugins.transparent")
 
