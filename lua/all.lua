@@ -185,13 +185,6 @@ vim.api.nvim_create_autocmd("BufWritePre", {
     end
 })
 
--- add {
---     source = "anuvyklack/pretty-fold.nvim",
---     name   = "pretty-fold"
--- }
---
--- require("pretty-fold").setup()
-
 add {
     source = "mrcjkb/haskell-tools.nvim",
     name   = "haskell-tools"
@@ -215,18 +208,23 @@ local function setup_haskell_keymaps()
     end
 
     -- Leader-c mappings untuk Cabal
-    nset('<Leader>cb', '<CMD>15split | term cabal build<CR>', desc 'Cabal Build'    )
-    nset('<Leader>cr', '<CMD>15split | term cabal run<CR>',   desc 'Cabal Run'      )
-    nset('<Leader>ct', '<CMD>15split | term cabal test<CR>',  desc 'Cabal Test'     )
-    nset('<Leader>cc', '<CMD>edit *.cabal<CR>',               desc 'Open Cabal File')
+    nset('<Leader>cb', '<CMD>vs | term cabal build<CR>', desc 'Cabal Build'    )
+    nset('<Leader>cr', '<CMD>vs | term cabal run<CR>',   desc 'Cabal Run'      )
+    nset('<Leader>ct', '<CMD>vs | term cabal test<CR>',  desc 'Cabal Test'     )
+    nset('<Leader>cc', '<CMD>edit *.cabal<CR>',          desc 'Open Cabal File')
+    nset(
+        '<leader>ci',
+        '<CMD>vs | term cabal install --installdir=./bin --overwrite-policy=always<CR>',
+        desc 'Cabal Install in bin directory'
+    )
 
     -- Leader-h mappings untuk Haskell Tools
     nset('<Leader>hh',  ht.hoogle.hoogle_signature, desc 'Hoogle Search'      )
     nset('<Leader>hr',  ht.repl.toggle,             desc 'Toggle REPL'        )
-    nset('<Leader>ht',  ht.lsp.buf_hover,           desc 'Show Type Signature')
-    nset('<Leader>hca', ht.lsp.code_actions,        desc 'Code Actions'       )
+    nset('<Leader>ht',  vim.lsp.buf.hover,          desc 'Show Type Signature')
 
-    nset('<Leader>hd',  ht.docs.buf.hover,          desc 'Show Documentation' )
+    -- nset('<Leader>hca', vim.lsp.code_actions,        desc 'Code Actions'       )
+    -- nset('<Leader>hd',  ht.docs.buf.hover,          desc 'Show Documentation' )
     -- nset('<Leader>hf', '<CMD>lua vim.lsp.buf.format()<CR>', desc 'Format File')
 end
 
