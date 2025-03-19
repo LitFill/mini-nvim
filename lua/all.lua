@@ -268,7 +268,7 @@ function GetShortPath()
     local display_path1 = buf_path:gsub("//", "/")
     local display_path  = display_path1:gsub("/", " -> ")
 
-    return "%#Normal#  LitFill :: " .. display_path
+    return "%#MiniIconsPurple#  LitFill :: " .. display_path
 end
 
 vim.api.nvim_create_autocmd('BufEnter', {
