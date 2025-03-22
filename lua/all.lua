@@ -235,3 +235,6 @@ add(require "plugins.todo-comments")
 ---@diagnostic disable-next-line: different-requires
 require("todo-comments").setup()
 
+-- add(require "plugins.vim-racket")
+
+add(require "plugins.rainbow-delimiter")
