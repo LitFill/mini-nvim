@@ -150,14 +150,42 @@ lsp.denols.setup {
     },
 }
 
+lsp.racket_langserver.setup {
+    cmd = { "racket", "-l", "racket-langserver" },
+    filetypes = { "racket" },
+    root_dir = function (_)
+        return vim.fn.getcwd()
+    end,
+    on_attach = function (_, bufnr)
+        local opt = {
+            noremap = true,
+            silent  = true,
+            buffer  = bufnr,
+        }
+        local nset = function(key, cmd, opts)
+            vim.keymap.set('n', key, cmd, opts)
+        end
+
+        nset('gd', vim.lsp.buf.definition, opt)
+        nset('gr', vim.lsp.buf.references, opt)
+        nset('K',  vim.lsp.buf.hover,      opt)
+    end,
+}
+
+vim.filetype.add {
+    extension = {
+        rkt = "racket",
+    },
+}
+
 -- lsp.denols.setup {}
 
 vim.g.markdown_fenced_languages = {
     "ts=typescript"
 }
 
-add(require "plugins.flexoki")
-require('myflexoki')
+add (require "plugins.flexoki")
+require 'myflexoki'
 
 add(require "plugins.nvim-treesitter")
 require('nvim-treesitter.configs').setup {
