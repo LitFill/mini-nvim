@@ -145,6 +145,15 @@ local function setup_haskell_keymaps()
         return opt
     end
 
+    local function run_haskell_repl_sequence()
+        vim.cmd('wincmd v')            -- Buka jendela vertikal
+        vim.cmd('wincmd l')            -- Pindah ke jendela kanan
+        ht.repl.toggle()               -- Toggle REPL Haskell
+        vim.cmd('wincmd c')            -- Tutup jendela
+        vim.opt.number = false         -- Matikan nomor baris
+        vim.opt.relativenumber = false -- Matikan nomor relatif
+    end
+
     -- Leader-c mappings untuk Cabal
     nset('<Leader>cb', '<CMD>vs | term cabal build<CR>', desc 'Cabal Build'    )
     nset('<Leader>cr', '<CMD>vs | term cabal run<CR>',   desc 'Cabal Run'      )
