@@ -52,34 +52,42 @@ set("n", "-", "<cmd>lua MiniFiles.open()<CR>", { desc = "Open parent dir" })
 
 -- set("n", "<leader>utr", "<cmd>TransparentToggle<CR>", { desc = "Toggle transparent background" })
 
+-- Terminal
 set("t", "<C-q>", "<C-\\><C-n>", { nowait = true })
 set(
     "n",
     "<leader>ot",
-    "<cmd>term<CR><cmd>set nonumber norelativenumber<CR>a",
+    "<cmd>set nonumber norelativenumber | term<CR>a",
     { desc = "(o)pen (t)erminal" }
+)
+set(
+    "n",
+    "<leader>vt",
+    "<cmd>vs | set nonumber norelativenumber | term<CR>a",
+    { desc = "(v)ertical pane (t)erminal" }
 )
 
 -- mini.pick
 set("n", "<leader>pb", "<cmd>Pick buffers<CR>", { desc = "(p)ick (b)uffers" })
 set("n", "<leader>pf", "<cmd>Pick files<CR>",   { desc = "(p)ick (f)iles"   })
+set("n", "<leader>ph", "<cmd>Pick help<CR>",    { desc = "(p)ick (h)elp"    })
 
 -- NeoGit
 set("n", "<leader>gn", "<cmd>Neogit<CR>", { desc = "open NeoGit" })
 
 -- LSP
-set(
-    "n",
-    "<leader>ca",
-    "<cmd>lua vim.lsp.buf.code_action()<CR>",
-    { desc = "(c)ode (a)ction LSP" }
-)
-set(
-    "n",
-    "<leader>rn",
-    "<cmd>lua vim.lsp.buf.rename()<CR>",
-    { desc = "rename using lsp" }
-)
+set ( "n", "<leader>ca"
+    , vim.lsp.buf.code_action
+    , { desc = "(c)ode (a)ction LSP" }
+    )
+set ( "n", "<leader>rn"
+    , vim.lsp.buf.rename
+    , { desc = "rename using lsp" }
+    )
+set ( "n", "<leader>gd"
+    , vim.lsp.buf.definition
+    , { desc = "go to definition LSP" }
+    )
 
 -- Typst Preview
 -- set("n", "<leader>tp", "<cmd>TypstPreviewToggle<CR>", { desc = "Toggle Typst Preview in browser" })
