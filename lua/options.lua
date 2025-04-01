@@ -25,3 +25,10 @@ vim.opt.undofile   = true  -- Simpan undo history
 vim.opt.splitright = true  -- Split vertical ke kanan
 vim.opt.splitbelow = true  -- Split horizontal ke bawah
 vim.opt.foldmethod = "indent"
+
+-- Neovim 0.11
+vim.diagnostic.config {
+    virtual_lines = {
+        current_line = true,
+    },
+}

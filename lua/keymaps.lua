@@ -14,7 +14,7 @@ local set = vim.keymap.set
 set("n", "<leader>qw", "<cmd>wq<CR>",   { desc = "save and quit" })
 set("n", "<Esc>",      "<cmd>nohl<CR>", { silent = true          })
 
-set({ "i", "n" }, "<C-s>", "<cmd>write<CR>", {desc = "save"})
+set( "n", "<C-s>", "<cmd>write<CR>", {desc = "save"})
 
 set({"i", "t", "v"}, "kj", "<Esc>", { desc = "exit to normal" })
 

@@ -61,7 +61,7 @@ lsp.denols.setup {
 }
 
 lsp.racket_langserver.setup {
-    cmd = { "racket", "-l", "racket-langserver" },
+    cmd = { "xvfb-run", "racket", "-l", "racket-langserver" },
     filetypes = { "racket" },
     root_dir = function (_)
         return vim.fn.getcwd()
