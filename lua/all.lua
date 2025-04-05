@@ -247,3 +247,6 @@ require("todo-comments").setup()
 -- add(require "plugins.vim-racket")
 
 add(require "plugins.rainbow-delimiter")
+
+add(require "plugins.stay-centered")
+require("stay-centered").setup()
