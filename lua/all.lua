@@ -14,6 +14,7 @@ local function add(plugin)
     MiniDeps.add(plugin)
 end
 
+-- TODO: Remove lspconfig
 add {
     source  = 'neovim/nvim-lspconfig',
     depends = { 'williamboman/mason.nvim' },
@@ -21,66 +22,6 @@ add {
 }
 
 require('mason').setup()
-local lsp = require 'lspconfig'
-lsp.lua_ls.setup {}
--- lsp.hls.setup {}
-lsp.unison.setup {
-    on_attach = function(_, bufnr)
-        vim.o.signcolumn = 'yes'
-        vim.o.updatetime = 250
-        vim.diagnostic.config { virtual_text = false }
-
-        vim.api.nvim_create_autocmd("CursorHold", {
-            buffer   = bufnr,
-            callback = function()
-                local opts = {
-                    focusable    = false,
-                    close_events = {
-                        "BufLeave",
-                        "CursorMoved",
-                        "InsertEnter",
-                        "FocusLost",
-                    },
-                    border = 'rounded',
-                    source = 'always',
-                    prefix = ' ',
-                    scope  = 'cursor',
-                }
-                vim.diagnostic.open_float(nil, opts)
-            end
-        })
-    end
-}
-
-lsp.denols.setup {
-    root_dir = lsp.util.root_pattern("deno.json", "deno.jsonc"),
-    init_options = {
-        lint = true,
-        unstable = true,
-    },
-}
-
-lsp.racket_langserver.setup {
-    cmd = { "xvfb-run", "racket", "-l", "racket-langserver" },
-    filetypes = { "racket" },
-    root_dir = function (_)
-        return vim.fn.getcwd()
-    end,
-    on_attach = function (_, bufnr)
-        local opt = {
-            noremap = true,
-            silent  = true,
-            buffer  = bufnr,
-        }
-        local nset = function(key, cmd, opts)
-            vim.keymap.set('n', key, cmd, opts)
-        end
-
-        nset('gd', vim.lsp.buf.definition, opt)
-        nset('gr', vim.lsp.buf.references, opt)
-        nset('K',  vim.lsp.buf.hover,      opt)
-    end,
-}
 
 vim.filetype.add {
     extension = {
@@ -88,7 +29,39 @@ vim.filetype.add {
     },
 }
 
--- lsp.denols.setup {}
+vim.lsp.enable "lua_ls"
+vim.lsp.enable "unison"
+vim.lsp.enable "racket_langserver"
+
+-- local lsp = require 'lspconfig'
+-- lsp.lua_ls.setup {}
+-- lsp.hls.setup {}
+-- lsp.unison.setup {
+--     on_attach = function(_, _)
+--         vim.o.signcolumn = 'yes'
+--         vim.o.updatetime = 250
+--
+--         -- vim.api.nvim_create_autocmd("CursorHold", {
+--         --     buffer   = bufnr,
+--         --     callback = function()
+--         --         local opts = {
+--         --             focusable    = false,
+--         --             close_events = {
+--         --                 "BufLeave",
+--         --                 "CursorMoved",
+--         --                 "InsertEnter",
+--         --                 "FocusLost",
+--         --             },
+--         --             border = 'rounded',
+--         --             source = 'always',
+--         --             prefix = ' ',
+--         --             scope  = 'cursor',
+--         --         }
+--         --         vim.diagnostic.open_float(nil, opts)
+--         --     end
+--         -- })
+--     end
+-- }
 
 vim.g.markdown_fenced_languages = {
     "ts=typescript"
@@ -218,12 +191,12 @@ function GetShortPath()
     return "%#MiniIconsPurple#  LitFill :: " .. display_path
 end
 
-vim.api.nvim_create_autocmd('BufEnter', {
-    pattern = "*",
-    once = true,
-    callback = function() vim.opt.scrolloff = 8 end
-})
-
+-- vim.api.nvim_create_autocmd('BufEnter', {
+--     pattern = "*",
+--     once = true,
+--     callback = function() vim.opt.scrolloff = 8 end
+-- })
+--
 add(require "plugins.render-markdown")
 
 add(require "plugins.nvim-focus")
