@@ -5,7 +5,7 @@ local enabled_modules = {
     'align',
     'bracketed',
     'comment',
-    'completion',
+    -- 'completion',
     'cursorword',
     'diff',
     'doc',
