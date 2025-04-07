@@ -1,3 +1,5 @@
+local vim = vim
+
 local path_package = vim.fn.stdpath('data') .. '/site/'
 local mini_path    = path_package .. 'pack/deps/start/mini.nvim'
 
@@ -14,4 +16,4 @@ end
 
 require('mini.deps').setup { path = { package = path_package } }
 
-require("all")
+require "all"
