@@ -13,15 +13,6 @@ local function add(plugin)
     MiniDeps.add(plugin)
 end
 
--- TODO: Remove lspconfig and the comments
-add {
-    source  = 'neovim/nvim-lspconfig',
-    depends = { 'williamboman/mason.nvim' },
-    name    = 'lspconfig',
-}
-
-require('mason').setup()
-
 vim.filetype.add {
     extension = {
         rkt = "racket",
@@ -32,38 +23,7 @@ vim.lsp.enable "lua_ls"
 vim.lsp.enable "unison"
 vim.lsp.enable "denols"
 vim.lsp.enable "racket_langserver"
-
--- WARN: i need to remove this
---
--- local lsp = require 'lspconfig'
--- lsp.lua_ls.setup {}
--- lsp.hls.setup {}
--- lsp.unison.setup {
---     on_attach = function(_, _)
---         vim.o.signcolumn = 'yes'
---         vim.o.updatetime = 250
---
---         -- vim.api.nvim_create_autocmd("CursorHold", {
---         --     buffer   = bufnr,
---         --     callback = function()
---         --         local opts = {
---         --             focusable    = false,
---         --             close_events = {
---         --                 "BufLeave",
---         --                 "CursorMoved",
---         --                 "InsertEnter",
---         --                 "FocusLost",
---         --             },
---         --             border = 'rounded',
---         --             source = 'always',
---         --             prefix = ' ',
---         --             scope  = 'cursor',
---         --         }
---         --         vim.diagnostic.open_float(nil, opts)
---         --     end
---         -- })
---     end
--- }
+vim.lsp.enable "purescriptls"
 
 vim.g.markdown_fenced_languages = {
     "ts=typescript"
