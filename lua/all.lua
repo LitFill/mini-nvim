@@ -228,3 +228,22 @@ require("blink-cmp").setup({
     -- See the fuzzy documentation for more information
     fuzzy = { implementation = "rust" },
 })
+
+local signcolumnGroup =
+    vim.api.nvim_create_augroup(
+        'PersistentSigncolumn',
+        { clear = true }
+    )
+
+vim.api.nvim_create_autocmd('BufEnter', {
+    group = signcolumnGroup,
+    pattern = '*',
+    callback = function ()
+        if  vim.bo.buftype == '' and
+            vim.wo.signcolumn ~= 'yes:2'
+        then
+            vim.opt.signcolumn = 'yes:2'
+        end
+    end,
+    desc = "Ensure signcolumn is always 'yes:2' in normal buffers",
+})
