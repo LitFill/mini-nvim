@@ -35,14 +35,14 @@ vim.g.markdown_fenced_languages = {
 ----------------------------------------
 
 add (require "plugins.flexoki")
-require 'myflexoki'
+-- require 'myflexoki'
 
 add (require "plugins.neo-solarized")
-add (require "plugins.catppuccin")
 
-vim.cmd [[
-    colorscheme catppuccin-frappe
-]]
+add (require "plugins.catppuccin")
+require 'mycatppuccin'
+
+vim.cmd "colorscheme catppuccin-frappe"
 
 ----------------------------------------
 --- colorscheme END
@@ -268,5 +268,9 @@ require "clock" .setup {
     time_format = "%H:%M",
     separator = " ",
 }
+
+add (require "plugins.colorizer")
+require "colorizer" .setup ()
+
 
 require "neovide"
