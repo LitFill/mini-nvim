@@ -70,4 +70,4 @@ require("flexoki").setup {
 	end,
 }
 
-vim.cmd "colorscheme flexoki"
+-- vim.cmd "colorscheme flexoki"

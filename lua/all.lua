@@ -30,8 +30,23 @@ vim.g.markdown_fenced_languages = {
     "ts=typescript"
 }
 
+----------------------------------------
+--- colorscheme BEGIN
+----------------------------------------
+
 add (require "plugins.flexoki")
 require 'myflexoki'
+
+add (require "plugins.neo-solarized")
+add (require "plugins.catppuccin")
+
+vim.cmd [[
+    colorscheme catppuccin-frappe
+]]
+
+----------------------------------------
+--- colorscheme END
+----------------------------------------
 
 add (require "plugins.nvim-treesitter")
 require 'nvim-treesitter.configs' .setup {
@@ -80,6 +95,8 @@ local function setup_haskell_keymaps ()
         opt.desc = desc
         return opt
     end
+
+    vim.o.makeprg = "cabal build"
 
     -- Leader-c mappings untuk Cabal
     nset ('<Leader>cb', '<CMD>vs | term cabal build<CR>', desc 'Cabal Build'    )
@@ -251,3 +268,5 @@ require "clock" .setup {
     time_format = "%H:%M",
     separator = " ",
 }
+
+require "neovide"

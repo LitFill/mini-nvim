@@ -74,8 +74,10 @@ hi def link parser_name             Function
 hi def link token_name              Identifier
 hi def link happy_directives        Keyword
 hi def link happy_separator         Special
-hi def link non_terminal            Identifier
+hi def link non_terminal            Type
 hi def link terminal                String
+hi def link haskell_code            Constant
+
 
 " Syntax configuration name
 let b:current_syntax = "happy"

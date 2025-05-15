@@ -18,6 +18,7 @@ endif
 " so we add this symbols to isident to make autocompletion work properly
 set isident+=$
 set isident+=@
+set isident+=%
 
 " Haskell code in alex file
 syn match haskell_comment  /--.*$/ contained contains=alex_todo,alex_fixme
