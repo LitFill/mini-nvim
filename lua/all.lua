@@ -246,7 +246,7 @@ require "blink-cmp" .setup {
     },
 
     appearance = { nerd_font_variant = 'mono' },
-    fuzzy      = { implementation    = "rust" },
+    fuzzy      = { implementation    = "lua" },
     sources    = { default           = {
         'lsp',
         'path',
