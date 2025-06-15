@@ -37,14 +37,15 @@ vim.g.markdown_fenced_languages = {
 ----------------------------------------
 
 add (require "plugins.flexoki")
--- require 'myflexoki'
+require 'myflexoki'
 
 add (require "plugins.neo-solarized")
 
 add (require "plugins.catppuccin")
-require 'mycatppuccin'
+-- require 'mycatppuccin'
 
-vim.cmd "colorscheme catppuccin-frappe"
+-- vim.cmd "colorscheme catppuccin-frappe"
+vim.cmd "colorscheme flexoki"
 
 ----------------------------------------
 --- colorscheme END
@@ -290,3 +291,5 @@ vim.api.nvim_create_autocmd("BufReadPost", {
         vim.opt_local.makeprg = "mmc --make " .. vim.fn.escape(dir_name, ' ')
     end,
 })
+
+vim.api.nvim_create_user_command ('Cd', [[cd %:h]], {})
