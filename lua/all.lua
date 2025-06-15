@@ -25,6 +25,8 @@ vim.lsp.enable "denols"
 vim.lsp.enable "racket_langserver"
 vim.lsp.enable "purescriptls"
 vim.lsp.enable "clangd"
+vim.lsp.enable "prolog"
+vim.lsp.enable "rust_analyzer"
 
 vim.g.markdown_fenced_languages = {
     "ts=typescript"
@@ -43,17 +45,6 @@ add (require "plugins.catppuccin")
 require 'mycatppuccin'
 
 vim.cmd "colorscheme catppuccin-frappe"
-
-----------------------------------------
---- colorscheme END
-----------------------------------------
-
-add (require "plugins.neo-solarized")
-add (require "plugins.catppuccin")
-
-vim.cmd [[
-    colorscheme catppuccin-frappe
-]]
 
 ----------------------------------------
 --- colorscheme END
@@ -85,10 +76,7 @@ vim.api.nvim_create_autocmd ("BufWritePre", {
     end
 })
 
-add {
-    source = "mrcjkb/haskell-tools.nvim",
-    name   = "haskell-tools"
-}
+add (require "plugins.haskell-tools")
 
 local function setup_haskell_keymaps ()
     local ht    = require ('haskell-tools')
@@ -134,6 +122,13 @@ end
 vim.api.nvim_create_autocmd ('FileType', {
     pattern = { "haskell", "cabal", "*.hs", "*.cabal" },
     callback = setup_haskell_keymaps,
+})
+
+vim.api.nvim_create_autocmd ('FileType', {
+    pattern = { "rust", "cargo", "*rs", "Cargo.toml" },
+    callback = function ()
+        vim.o.makeprg = "cargo build"
+    end,
 })
 
 vim.api.nvim_create_autocmd ('BufEnter', {
@@ -196,7 +191,6 @@ vim.api.nvim_create_user_command ("WithUnison", function(opts)
 end, { nargs = 1 })
 
 add (require "plugins.todo-comments")
----@diagnostic disable-next-line: different-requires
 require "todo-comments" .setup ()
 
 -- add (require "plugins.vim-racket")
@@ -206,54 +200,55 @@ add (require "plugins.rainbow-delimiter")
 add (require "plugins.stay-centered")
 require ("stay-centered").setup ()
 
-add (require "plugins.blink-cmp")
-require "blink-cmp" .setup {
-    -- See :h blink-cmp-config-keymap for defining your own keymap
-    keymap     = {
-        preset = 'enter',
-        ['<A-1>'] = { function (cmp) cmp.accept { index = 1  } end },
-        ['<A-2>'] = { function (cmp) cmp.accept { index = 2  } end },
-        ['<A-3>'] = { function (cmp) cmp.accept { index = 3  } end },
-        ['<A-4>'] = { function (cmp) cmp.accept { index = 4  } end },
-        ['<A-5>'] = { function (cmp) cmp.accept { index = 5  } end },
-        ['<A-6>'] = { function (cmp) cmp.accept { index = 6  } end },
-        ['<A-7>'] = { function (cmp) cmp.accept { index = 7  } end },
-        ['<A-8>'] = { function (cmp) cmp.accept { index = 8  } end },
-        ['<A-9>'] = { function (cmp) cmp.accept { index = 9  } end },
-        ['<A-0>'] = { function (cmp) cmp.accept { index = 10 } end },
-    },
-
-    completion = {
-        menu = { draw = { columns = {
-            { 'item_idx' },
-            { 'kind_icon' },
-            {
-                'label',
-                'label_description',
-                gap = 1
-            },
-        },
-        components = {
-            item_idx = {
-                text = function (ctx)
-                    return
-                        ctx.idx == 10 and '0' or
-                        ctx.idx >= 10 and ' ' or
-                        tostring(ctx.idx)
-                end,
-            }
-        } } }
-    },
-
-    appearance = { nerd_font_variant = 'mono' },
-    fuzzy      = { implementation    = "rust" },
-    sources    = { default           = {
-        'lsp',
-        'path',
-        'snippets',
-        'buffer'
-    }},
-}
+-- add (require "plugins.blink-cmp")
+-- require "blink-cmp" .setup {
+--     -- See :h blink-cmp-config-keymap for defining your own keymap
+--     keymap     = {
+--         preset = 'enter',
+--         ['<A-1>'] = { function (cmp) cmp.accept { index = 1  } end },
+--         ['<A-2>'] = { function (cmp) cmp.accept { index = 2  } end },
+--         ['<A-3>'] = { function (cmp) cmp.accept { index = 3  } end },
+--         ['<A-4>'] = { function (cmp) cmp.accept { index = 4  } end },
+--         ['<A-5>'] = { function (cmp) cmp.accept { index = 5  } end },
+--         ['<A-6>'] = { function (cmp) cmp.accept { index = 6  } end },
+--         ['<A-7>'] = { function (cmp) cmp.accept { index = 7  } end },
+--         ['<A-8>'] = { function (cmp) cmp.accept { index = 8  } end },
+--         ['<A-9>'] = { function (cmp) cmp.accept { index = 9  } end },
+--         ['<A-0>'] = { function (cmp) cmp.accept { index = 10 } end },
+--     },
+--
+--     completion = {
+--         menu = { draw = { columns = {
+--             { 'item_idx' },
+--             { 'kind_icon' },
+--             {
+--                 'label',
+--                 'label_description',
+--                 gap = 1
+--             },
+--         },
+--         components = {
+--             item_idx = {
+--                 text = function (ctx)
+--                     return
+--                         ctx.idx == 10 and '0' or
+--                         ctx.idx >= 10 and ' ' or
+--                         tostring(ctx.idx)
+--                 end,
+--             }
+--         } } }
+--     },
+--
+--     appearance = { nerd_font_variant = 'mono' },
+--     fuzzy      = { implementation    = "prefer_rust_with_warning" },
+--     sources    = { default           = {
+--         'lsp',
+--         'path',
+--         'snippets',
+--         'buffer'
+--     }},
+--     term = { enabled = false, },
+-- }
 
 local signcolumnGroup =
     vim.api.nvim_create_augroup (
@@ -274,13 +269,24 @@ vim.api.nvim_create_autocmd ('BufEnter', {
     desc = "Ensure signcolumn is always 'yes:2' in normal buffers",
 })
 
-add (require "plugins.clock")
-require "clock" .setup {
-    time_format = "%H:%M",
-    separator = " ",
-}
+-- add (require "plugins.clock")
+-- require "clock" .setup {
+--     time_format = "%H:%M",
+--     separator = " ",
+-- }
 
 add (require "plugins.colorizer")
 require "colorizer" .setup ()
 
 require "neovide"
+
+-- Autocommand to set makeprg for Mercury (.m) files
+vim.api.nvim_create_autocmd("BufReadPost", {
+    pattern = "*.m",
+    callback = function()
+        local file_path = vim.api.nvim_buf_get_name(0)
+        local dir_path  = vim.fn.fnamemodify(file_path, ":h")
+        local dir_name  = vim.fn.fnamemodify(dir_path, ":t")
+        vim.opt_local.makeprg = "mmc --make " .. vim.fn.escape(dir_name, ' ')
+    end,
+})

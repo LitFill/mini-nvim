@@ -1,2 +1,10 @@
+:Merr	mercury.txt	/*:Merr*
+:Mmc	mercury.txt	/*:Mmc*
+Mercury.txt	mercury.txt	/*Mercury.txt*
 add	mini.txt	/*add*
 enabled_modules	mini.txt	/*enabled_modules*
+mercury-commands	mercury.txt	/*mercury-commands*
+mercury-ftplugin	mercury.txt	/*mercury-ftplugin*
+mercury-install	mercury.txt	/*mercury-install*
+mercury-overview	mercury.txt	/*mercury-overview*
+mercury-syntax	mercury.txt	/*mercury-syntax*
