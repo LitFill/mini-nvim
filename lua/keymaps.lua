@@ -18,6 +18,8 @@ set( "n", "<C-s>", "<cmd>write<CR>", {desc = "save"})
 
 set({"i", "t", "v"}, "kj", "<Esc>", { desc = "exit to normal" })
 
+set ('n', '<leader>cd', '<cmd>Cd<CR>', { desc = "cd to this file dir"})
+
 -- using makefile
 set("n", "<leader>mr",  "<cmd>term make run<CR>",        { desc = "(m)ake (r)un"   })
 set("n", "<leader>mb",  "<cmd>term make build<CR>",      { desc = "(m)ake (b)uild" })
@@ -41,16 +43,14 @@ set({ "n", "v" }, "<leader>d", [["_d]])
 -- set("n", "<leader>k", "<cmd>lnext<CR>zz")
 -- set("n", "<leader>j", "<cmd>lprev<CR>zz")
 
-set(
-    "n",
-    "<leader>rw",
+set( "n", "<leader>rw",
     [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
     { desc = "(r)eplace (w)ord" }
 )
 
 set("n", "-", "<cmd>lua MiniFiles.open()<CR>", { desc = "Open parent dir" })
 
--- set("n", "<leader>utr", "<cmd>TransparentToggle<CR>", { desc = "Toggle transparent background" })
+ set("n", "<leader>utr", "<cmd>TransparentToggle<CR>", { desc = "Toggle transparent background" })
 
 -- Terminal
 set("t", "<C-q>", "<C-\\><C-n>", { nowait = true })

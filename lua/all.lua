@@ -35,25 +35,17 @@ vim.g.markdown_fenced_languages = {
 ----------------------------------------
 
 add (require "plugins.flexoki")
--- require 'myflexoki'
+require 'myflexoki'
 
 add (require "plugins.neo-solarized")
 
 add (require "plugins.catppuccin")
-require 'mycatppuccin'
+-- require 'mycatppuccin'
 
-vim.cmd "colorscheme catppuccin-frappe"
-
-----------------------------------------
---- colorscheme END
-----------------------------------------
-
-add (require "plugins.neo-solarized")
-add (require "plugins.catppuccin")
-
-vim.cmd [[
-    colorscheme catppuccin-frappe
-]]
+-- vim.cmd [[
+--     colorscheme catppuccin-frappe
+-- ]]
+vim.cmd "colorscheme flexoki"
 
 ----------------------------------------
 --- colorscheme END
@@ -284,3 +276,5 @@ add (require "plugins.colorizer")
 require "colorizer" .setup ()
 
 require "neovide"
+
+vim.api.nvim_create_user_command ('Cd', [[cd %:h]], {})
