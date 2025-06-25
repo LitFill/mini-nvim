@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [unreleased]
+
+### 🚀 Features
+
+- Add changelog and git-cliff config
+
+### 📚 Documentation
+
+- Improve installation script
+
 ## [1.0.0] - 2025-06-25
 
 ### 🚀 Features
