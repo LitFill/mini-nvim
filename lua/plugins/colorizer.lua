@@ -1,4 +1,4 @@
 return {
     source = "norcalli/nvim-colorizer.lua",
-    name   = "colorizer"
+    name = "colorizer",
 }

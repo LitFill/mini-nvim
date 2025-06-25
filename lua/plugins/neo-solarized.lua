@@ -1,4 +1,4 @@
 return {
-	source  = "Tsuzat/NeoSolarized.nvim",
-    name    = "neosolarized"
+    source = "Tsuzat/NeoSolarized.nvim",
+    name = "neosolarized",
 }

@@ -1,4 +1,4 @@
 return {
     source = "mrcjkb/haskell-tools.nvim",
-    name   = "haskell-tools"
+    name = "haskell-tools",
 }

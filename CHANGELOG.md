@@ -7,10 +7,19 @@ All notable changes to this project will be documented in this file.
 ### 🚀 Features
 
 - Add changelog and git-cliff config
+- *(lsp)* Load language servers on-demand
 
 ### 📚 Documentation
 
 - Improve installation script
+
+### 🎨 Styling
+
+- *(lua)* Format lua codebase
+
+### ⚙️ Miscellaneous Tasks
+
+- *(style)* Add stylua configuration
 
 ## [1.0.0] - 2025-06-25
 

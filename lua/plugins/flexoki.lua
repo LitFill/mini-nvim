@@ -1,4 +1,4 @@
 return {
-	source = "nuvic/flexoki-nvim",
-	name   = "flexoki",
+    source = "nuvic/flexoki-nvim",
+    name = "flexoki",
 }

@@ -1,3 +1,3 @@
 return {
-    source = "benknoble/vim-racket"
+    source = "benknoble/vim-racket",
 }
