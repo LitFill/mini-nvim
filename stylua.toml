@@ -1,0 +1,12 @@
+# Konfigurasi untuk StyLua
+
+# Lebar kolom maksimal sebelum baris dipecah
+column_width = 80
+
+# Jenis indentasi: "Spaces" atau "Tabs"
+indent_type = "Spaces"
+
+# Jumlah spasi untuk indentasi
+indent_width = 4
+
+call_parentheses = "None"
