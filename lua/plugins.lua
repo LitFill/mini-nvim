@@ -28,6 +28,7 @@ add(require "plugins.colorizer")
 add(require "plugins.neogit")
 add(require "plugins.haskell-tools")
 add(require "plugins.render-markdown")
+add(require "plugins.lean")
 
 -- Treesitter
 add(require "plugins.nvim-treesitter")
