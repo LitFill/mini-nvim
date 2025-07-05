@@ -1,46 +1,15 @@
----@diagnostic disable: undefined-global
-
-require "minis"
-
-require "options"
-require "keymaps"
-
--- Colorscheme
-require "myflexoki"
--- require 'mycatppuccin'
-
--- vim.cmd "colorscheme catppuccin-frappe"
-vim.cmd "colorscheme flexoki"
-
--- Plugin configurations
-require("nvim-treesitter.configs").setup {
-    ensure_installed = {
-        "lua",
-        "vimdoc",
-        "haskell",
-    },
-    highlight = { enable = true },
-}
-
-require("origami").setup()
-require("todo-comments").setup()
-require("stay-centered").setup()
-require("colorizer").setup()
-require "neovide"
-
+local vim = vim
 -- Autocommands
 vim.api.nvim_create_autocmd("BufWritePre", {
     pattern = "*",
-    callback = function()
-        MiniTrailspace.trim()
-    end,
+    callback = MiniTrailspace.trim,
 })
 
 local function setup_haskell_keymaps()
-    local ht = require "haskell-tools"
+    local ht    = require "haskell-tools"
     local bufnr = vim.api.nvim_get_current_buf()
-    local opt = { buffer = bufnr }
-    local set = vim.keymap.set
+    local opt   = { buffer = bufnr }
+    local set   = vim.keymap.set
 
     local nset = function(key, cmd, opts)
         set("n", key, cmd, opts)
@@ -57,9 +26,9 @@ local function setup_haskell_keymaps()
 
     -- Leader-c mappings untuk Cabal
     nset("<Leader>cb", "<CMD>vs | term cabal build<CR>", desc "Cabal Build")
-    nset("<Leader>cr", "<CMD>vs | term cabal run<CR>", desc "Cabal Run")
-    nset("<Leader>ct", "<CMD>vs | term cabal test<CR>", desc "Cabal Test")
-    nset("<Leader>cc", "<CMD>edit *.cabal<CR>", desc "Open Cabal File")
+    nset("<Leader>cr", "<CMD>vs | term cabal run<CR>",   desc "Cabal Run")
+    nset("<Leader>ct", "<CMD>vs | term cabal test<CR>",  desc "Cabal Test")
+    nset("<Leader>cc", "<CMD>edit *.cabal<CR>",          desc "Open Cabal File")
     nset(
         "<leader>ci",
         "<CMD>vs | term cabal install --installdir=./bin --overwrite-policy=always<CR>",
@@ -68,8 +37,8 @@ local function setup_haskell_keymaps()
 
     -- Leader-h mappings untuk Haskell Tools
     nset("<Leader>hh", ht.hoogle.hoogle_signature, desc "Hoogle Search")
-    nset("<Leader>hr", ht.repl.toggle, desc "Toggle REPL")
-    nset("<Leader>ht", vim.lsp.buf.hover, desc "Show Type Signature")
+    nset("<Leader>hr", ht.repl.toggle,             desc "Toggle REPL")
+    nset("<Leader>ht", vim.lsp.buf.hover,          desc "Show Type Signature")
 end
 
 vim.api.nvim_create_autocmd("FileType", {
@@ -77,12 +46,12 @@ vim.api.nvim_create_autocmd("FileType", {
     callback = setup_haskell_keymaps,
 })
 
-vim.api.nvim_create_autocmd("FileType", {
-    pattern = { "rust", "cargo", "*rs", "Cargo.toml" },
-    callback = function()
-        vim.o.makeprg = "cargo build"
-    end,
-})
+-- -- vim.api.nvim_create_autocmd("FileType", {
+--     pattern = { "rust", "cargo", "*rs", "Cargo.toml" },
+--     callback = function()
+--         vim.o.makeprg = "cargo build"
+--     end,
+-- })
 
 vim.api.nvim_create_autocmd("BufEnter", {
     pattern = "*",
@@ -125,7 +94,10 @@ vim.api.nvim_create_user_command("WithUnison", function(opts)
 end, { nargs = 1 })
 
 local signcolumnGroup =
-    vim.api.nvim_create_augroup("PersistentSigncolumn", { clear = true })
+    vim.api.nvim_create_augroup(
+        "PersistentSigncolumn",
+        { clear = true }
+    )
 
 vim.api.nvim_create_autocmd("BufEnter", {
     group = signcolumnGroup,
@@ -149,3 +121,27 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 })
 
 vim.api.nvim_create_user_command("Cd", [[cd %:h]], {})
+
+vim.api.nvim_create_autocmd("BufEnter", {
+    pattern = "*.csv",
+    callback = function()
+        require("csvview").setup {
+            parser = { comments = { "#", "//" } },
+            keymaps = {
+                -- Text objects for selecting fields
+                textobject_field_inner = { "if", mode = { "o", "x" } },
+                textobject_field_outer = { "af", mode = { "o", "x" } },
+                -- Excel-like navigation:
+                -- Use <Tab> and <S-Tab> to move horizontally between fields.
+                -- Use <Enter> and <S-Enter> to move vertically between rows and place the cursor at the end of the field.
+                -- Note: In terminals, you may need to enable CSI-u mode to use <S-Tab> and <S-Enter>.
+                jump_next_field_end = { "<Tab>", mode = { "n", "v" } },
+                jump_prev_field_end = { "<S-Tab>", mode = { "n", "v" } },
+                jump_next_row = { "<Enter>", mode = { "n", "v" } },
+                jump_prev_row = { "<S-Enter>", mode = { "n", "v" } },
+            },
+            cmd = { "CsvViewEnable", "CsvViewDisable", "CsvViewToggle" },
+        }
+        vim.cmd "CsvViewToggle display_mode=border header_lnum=1"
+    end,
+})

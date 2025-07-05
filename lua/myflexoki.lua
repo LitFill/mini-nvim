@@ -1,3 +1,16 @@
+---@alias Palette { base: string, surface: string, overlay: string, muted: string, subtle: string, text: string, red_two: string, orange_two: string, magenta_two: string, blue_two: string, cyan_two: string, purple_two: string }
+
+---@type Palette
+local overide = {
+    red_two     = "#ff5779",
+    orange_two  = "#ffc100",
+    magenta_two = "#7075d7",
+    blue_two    = "#3777fd",
+    cyan_two    = "#00a6e4",
+    purple_two  = "#ab4eff",
+    green_two   = "#14c200",
+}
+
 require("flexoki").setup {
     variant = "auto", -- auto, moon, or dawn
     dark_variant = true,
@@ -13,26 +26,26 @@ require("flexoki").setup {
 
     groups = {
         border = "muted",
-        link = "purple_two",
-        panel = "surface",
+        link   = "purple_two",
+        panel  = "surface",
 
         error = "red_one",
-        hint = "purple_one",
-        info = "cyan_one",
-        ok = "green_one",
-        warn = "orange_one",
-        note = "blue_one",
-        todo = "magenta_one",
+        hint  = "purple_one",
+        info  = "cyan_one",
+        ok    = "green_one",
+        warn  = "orange_one",
+        note  = "blue_one",
+        todo  = "magenta_one",
 
-        git_add = "green_one",
-        git_change = "yellow_one",
-        git_delete = "red_one",
-        git_dirty = "yellow_one",
-        git_ignore = "muted",
-        git_merge = "purple_one",
-        git_rename = "blue_one",
-        git_stage = "purple_one",
-        git_text = "magenta_one",
+        git_add       = "green_one",
+        git_change    = "yellow_one",
+        git_delete    = "red_one",
+        git_dirty     = "yellow_one",
+        git_ignore    = "muted",
+        git_merge     = "purple_one",
+        git_rename    = "blue_one",
+        git_stage     = "purple_one",
+        git_text      = "magenta_one",
         git_untracked = "subtle",
 
         h1 = "purple_two",
@@ -45,10 +58,7 @@ require("flexoki").setup {
 
     palette = {
         -- Override the builtin palette per variant
-        -- moon = {
-        --	 base    = '#100f0f',
-        --	 overlay = '#1c1b1a',
-        -- },
+        moon = overide,
     },
 
     highlight_groups = {
@@ -69,5 +79,3 @@ require("flexoki").setup {
         -- end
     end,
 }
-
--- vim.cmd "colorscheme flexoki"

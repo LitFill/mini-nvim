@@ -1,3 +1,4 @@
+---@diagnostic disable: different-requires
 ----------------------------------------
 --- PLUGINS
 ----------------------------------------
@@ -6,32 +7,40 @@ local function add(plugin)
     require("mini.deps").add(plugin)
 end
 
+---@param modname string
+-- HACK: untuk tetap mendapakan completion untuk file plugins
+local require = function(modname)
+    add(require(modname))
+end
+
 add "echasnovski/mini.nvim"
 add "rafamadriz/friendly-snippets"
 
 -- Colorschemes
-add(require "plugins.flexoki")
-add(require "plugins.neo-solarized")
-add(require "plugins.catppuccin")
+require "plugins.flexoki"
+require "plugins.neo-solarized"
+-- require "plugins.catppuccin"
 
 -- UI
-add(require "plugins.nvim-focus")
-add(require "plugins.nvim-origami")
-add(require "plugins.rainbow-delimiter")
-add(require "plugins.stay-centered")
-add(require "plugins.todo-comments")
-add(require "plugins.transparent")
-add(require "plugins.clock")
-add(require "plugins.colorizer")
+require "plugins.nvim-focus"
+require "plugins.nvim-origami"
+require "plugins.rainbow-delimiters"
+require "plugins.stay-centered"
+require "plugins.todo-comments"
+require "plugins.transparent"
+require "plugins.clock"
+require "plugins.colorizer"
+require "plugins.sqlua"
+require "plugins.csvview"
 
 -- Tools
-add(require "plugins.neogit")
-add(require "plugins.haskell-tools")
-add(require "plugins.render-markdown")
-add(require "plugins.lean")
+require "plugins.neogit"
+require "plugins.haskell-tools"
+require "plugins.render-markdown"
+-- require "plugins.lean"
 
 -- Treesitter
-add(require "plugins.nvim-treesitter")
+require "plugins.nvim-treesitter"
 
 -- Completion
-add(require "plugins.blink-cmp")
+require "plugins.blink-cmp"

@@ -1,37 +1,38 @@
---- list of mini.nvim family ofplugins I want to be activated
----@type string[]
+---@alias MiniPlugin "mini.ai"|"mini.align"|"mini.bracketed"|"mini.comment"|"mini.completion"|"mini.cursorword"|"mini.diff"|"mini.doc"|"mini.extra"|"mini.files"|"mini.git"|"mini.icons"|"mini.indentscope"|"mini.jump"|"mini.jump2d"|"mini.move"|"mini.notify"|"mini.operators"|"mini.pairs"|"mini.pick"|"mini.splitjoin"|"mini.starter"|"mini.statusline"|"mini.surround"|"mini.tabline"|"mini.trailspace",
+
+--- list of mini.nvim family of plugins I want to be activated
+---@type MiniPlugin[]
 local enabled_modules = {
-    "ai",
-    "align",
-    "bracketed",
-    "comment",
-    "completion",
-    "cursorword",
-    "diff",
-    "doc",
-    "extra",
-    "files",
-    "git",
-    "icons",
-    "indentscope",
-    "jump",
-    "jump2d",
-    "move",
-    "notify",
-    "operators",
-    "pairs",
-    "pick",
-    "splitjoin",
-    "starter",
-    "statusline",
-    "surround",
-    "tabline",
-    "trailspace",
+    "mini.ai",
+    "mini.align",
+    "mini.bracketed",
+    "mini.comment",
+    "mini.completion",
+    "mini.cursorword",
+    "mini.diff",
+    "mini.doc",
+    "mini.extra",
+    "mini.files",
+    "mini.git",
+    "mini.icons",
+    "mini.indentscope",
+    "mini.jump",
+    "mini.jump2d",
+    "mini.move",
+    "mini.notify",
+    "mini.operators",
+    "mini.pairs",
+    "mini.pick",
+    "mini.splitjoin",
+    "mini.starter",
+    "mini.statusline",
+    "mini.surround",
+    "mini.tabline",
+    "mini.trailspace",
 }
 
 for _, module in ipairs(enabled_modules) do
-    local mod = "mini." .. module
-    require(mod).setup()
+    require(module).setup()
 end
 
 local miniclue = require "mini.clue"
@@ -80,7 +81,9 @@ miniclue.setup {
 }
 
 local gen_loader = require("mini.snippets").gen_loader
-require("mini.snippets").setup {
+
+require "mini.snippets"
+.setup {
     snippets = {
         -- Load custom file with global snippets first (adjust for Windows)
         gen_loader.from_file "~/.config/nvim/snippets/global.json",
@@ -91,7 +94,8 @@ require("mini.snippets").setup {
     },
 }
 
-require("mini.files").setup {
+require "mini.files"
+.setup {
     windows = {
         preview = true,
         width_preview = 60,
