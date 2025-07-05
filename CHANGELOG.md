@@ -2,12 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
-## [unreleased]
+## [1.1.0] - 2025-07-05
 
 ### 🚀 Features
 
 - Add changelog and git-cliff config
 - *(lsp)* Load language servers on-demand
+- Install and configure lean.nvim plugin
+
+### 🚜 Refactor
+
+- *(config)* Modularize and update configuration
 
 ### 📚 Documentation
 
