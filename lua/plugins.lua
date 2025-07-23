@@ -20,6 +20,7 @@ add "rafamadriz/friendly-snippets"
 require "plugins.flexoki"
 require "plugins.neo-solarized"
 -- require "plugins.catppuccin"
+require "plugins.lackluster"
 
 -- UI
 require "plugins.nvim-focus"

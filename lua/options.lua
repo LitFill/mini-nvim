@@ -31,5 +31,7 @@ vim.diagnostic.config {
     },
 }
 
+vim.o.winborder = "rounded"
+
 -- Highlight untuk matching parent
 vim.api.nvim_set_hl(0, "MatchParen", { bg = "darkblue" })
