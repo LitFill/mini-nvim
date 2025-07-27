@@ -37,6 +37,7 @@ require "plugins.csvview"
 -- Tools
 require "plugins.neogit"
 require "plugins.haskell-tools"
+require "plugins.ghcid"
 require "plugins.render-markdown"
 -- require "plugins.lean"
 
