@@ -11,6 +11,13 @@ require "autocmds"
 require "myflexoki"
 
 -- vim.cmd "colorscheme flexoki"
+
+require "lackluster" .setup
+{ tweak_syntax =
+    { comment = "#dddddd"
+    }
+}
+
 vim.cmd "colorscheme lackluster-mint"
 
 -- Plugin configurations

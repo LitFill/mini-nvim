@@ -1,9 +1,19 @@
-local vim = vim
 -- Autocommands
-vim.api.nvim_create_autocmd("BufWritePre", {
+
+--- Helper function for making autocommands
+---@param trigger string
+---@return function
+local function mk_aucmd(trigger)
+    ---@param opts aucmdopts
+    return function(opts)
+        vim.api.nvim_create_autocmd(trigger, opts)
+    end
+end
+
+mk_aucmd "BufWritePre" {
     pattern = "*",
     callback = MiniTrailspace.trim,
-})
+}
 
 local function setup_haskell_keymaps()
     local ht    = require "haskell-tools"
@@ -41,10 +51,10 @@ local function setup_haskell_keymaps()
     nset("<Leader>ht", vim.lsp.buf.hover,          desc "Show Type Signature")
 end
 
-vim.api.nvim_create_autocmd("FileType", {
+mk_aucmd "FileType" {
     pattern = { "haskell", "cabal", "*.hs", "*.cabal" },
     callback = setup_haskell_keymaps,
-})
+}
 
 -- -- vim.api.nvim_create_autocmd("FileType", {
 --     pattern = { "rust", "cargo", "*rs", "Cargo.toml" },
@@ -53,12 +63,12 @@ vim.api.nvim_create_autocmd("FileType", {
 --     end,
 -- })
 
-vim.api.nvim_create_autocmd("BufEnter", {
+mk_aucmd "BufEnter" {
     pattern = "*",
     callback = function()
         vim.o.winbar = "%{%v:lua.GetShortPath()%}"
     end,
-})
+}
 
 ---@return string
 function GetShortPath()
@@ -99,7 +109,7 @@ local signcolumnGroup =
         { clear = true }
     )
 
-vim.api.nvim_create_autocmd("BufEnter", {
+mk_aucmd "BufEnter" {
     group = signcolumnGroup,
     pattern = "*",
     callback = function()
@@ -108,9 +118,9 @@ vim.api.nvim_create_autocmd("BufEnter", {
         end
     end,
     desc = "Ensure signcolumn is always 'yes:2' in normal buffers",
-})
+}
 
-vim.api.nvim_create_autocmd("BufReadPost", {
+mk_aucmd "BufReadPost" {
     pattern = "*.m",
     callback = function()
         local file_path = vim.api.nvim_buf_get_name(0)
@@ -118,11 +128,11 @@ vim.api.nvim_create_autocmd("BufReadPost", {
         local dir_name = vim.fn.fnamemodify(dir_path, ":t")
         vim.opt_local.makeprg = "mmc --make " .. vim.fn.escape(dir_name, " ")
     end,
-})
+}
 
 vim.api.nvim_create_user_command("Cd", [[cd %:h]], {})
 
-vim.api.nvim_create_autocmd("BufEnter", {
+mk_aucmd "BufEnter" {
     pattern = "*.csv",
     callback = function()
         require("csvview").setup {
@@ -144,4 +154,4 @@ vim.api.nvim_create_autocmd("BufEnter", {
         }
         vim.cmd "CsvViewToggle display_mode=border header_lnum=1"
     end,
-})
+}
