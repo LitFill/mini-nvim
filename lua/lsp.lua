@@ -42,8 +42,24 @@ local function start_lsp(opts)
     }
 end
 
+---@class aucmdopts
+---@field group any
+---@field pattern string | string[]
+---@field callback function
+
+--- Helper function for making autocommands
+---@param trigger string
+---@return function
+local function mk_aucmd(trigger)
+    ---@param opts aucmdopts
+    return function(opts)
+        vim.api.nvim_create_autocmd(trigger, opts)
+    end
+end
+
+--#region LSP
 -- Lua
-vim.api.nvim_create_autocmd("FileType", {
+mk_aucmd "FileType" {
     group    = lsp_group,
     pattern  = "lua",
     callback = function()
@@ -53,10 +69,10 @@ vim.api.nvim_create_autocmd("FileType", {
             root_files = { ".git", "lua" },
         }
     end,
-})
+}
 
 -- Rust
-vim.api.nvim_create_autocmd("FileType", {
+mk_aucmd "FileType" {
     group = lsp_group,
     pattern = "rust",
     callback = function()
@@ -67,10 +83,10 @@ vim.api.nvim_create_autocmd("FileType", {
         }
         vim.o.makeprg = "cargo build"
     end,
-})
+}
 
 -- Deno (JS/TS)
-vim.api.nvim_create_autocmd("FileType", {
+mk_aucmd "FileType" {
     group = lsp_group,
     pattern = {
         "javascript",
@@ -86,10 +102,10 @@ vim.api.nvim_create_autocmd("FileType", {
         }
         vim.o.makeprg = "deno build"
     end,
-})
+}
 
 -- C/C++
-vim.api.nvim_create_autocmd("FileType", {
+mk_aucmd "FileType" {
     group = lsp_group,
     pattern = { "c", "cpp", "objc", "objcpp", "cuda" },
     callback = function()
@@ -99,10 +115,10 @@ vim.api.nvim_create_autocmd("FileType", {
             root_files = { "compile_commands.json", ".git" },
         }
     end,
-})
+}
 
 -- Racket
-vim.api.nvim_create_autocmd("FileType", {
+mk_aucmd "FileType" {
     group = lsp_group,
     pattern = "racket",
     callback = function()
@@ -112,10 +128,10 @@ vim.api.nvim_create_autocmd("FileType", {
             root_files = { ".git" },
         }
     end,
-})
+}
 
 -- Purescript
-vim.api.nvim_create_autocmd("FileType", {
+mk_aucmd "FileType" {
     group = lsp_group,
     pattern = "purescript",
     callback = function()
@@ -125,10 +141,10 @@ vim.api.nvim_create_autocmd("FileType", {
             root_files = { "spago.dhall", "psc-package.json", ".git" },
         }
     end,
-})
+}
 
 -- Prolog
-vim.api.nvim_create_autocmd("FileType", {
+mk_aucmd "FileType" {
     group = lsp_group,
     pattern = "prolog",
     callback = function()
@@ -146,10 +162,10 @@ vim.api.nvim_create_autocmd("FileType", {
             root_files = { ".git" },
         }
     end,
-})
+}
 
 -- Unison
-vim.api.nvim_create_autocmd("FileType", {
+mk_aucmd "FileType" {
     group = lsp_group,
     pattern = "unison",
     callback = function()
@@ -159,10 +175,10 @@ vim.api.nvim_create_autocmd("FileType", {
             root_files = { "_ui" },
         }
     end,
-})
+}
 
 -- Lean
-vim.api.nvim_create_autocmd("FileType", {
+mk_aucmd "FileType" {
     group = lsp_group,
     pattern = "lean",
     callback = function()
@@ -177,8 +193,5 @@ vim.api.nvim_create_autocmd("FileType", {
         }
         vim.o.makeprg = "lake build"
     end,
-})
-
--- vim.g.markdown_fenced_languages = {
---     "ts=typescript",
--- }
+}
+--#endregion LSP
