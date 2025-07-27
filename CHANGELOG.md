@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [unreleased]
+
+### 🚀 Features
+
+- *(lean)* Set indentation to 4 spaces
+- *(lang)* Add support for lamb, laras, and simp
+
+### 📚 Documentation
+
+- *(changelog)* Update
+
 ## [1.1.0] - 2025-07-05
 
 ### 🚀 Features
