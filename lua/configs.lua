@@ -10,7 +10,7 @@ require "autocmds"
 -- Colorscheme
 require "myflexoki"
 
--- vim.cmd "colorscheme flexoki"
+vim.cmd "colorscheme flexoki"
 
 require "lackluster" .setup
 { tweak_syntax =
@@ -18,7 +18,7 @@ require "lackluster" .setup
     }
 }
 
-vim.cmd "colorscheme lackluster-mint"
+-- vim.cmd "colorscheme lackluster-mint"
 
 -- Plugin configurations
 require "nvim-treesitter.configs" .setup
@@ -83,6 +83,11 @@ require  "colorizer"      .setup()
 require  "sqlua"          .setup()
 
 -- require "lean"          .setup()
+
+-- LSP
+-- require "lspconfig" .setup()
+
+vim.lsp.enable "ts_ls"
 
 -- ensure this ↓ is the last line
 require "neovide"

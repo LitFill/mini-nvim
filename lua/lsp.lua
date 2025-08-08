@@ -1,8 +1,3 @@
--- lua/lsp.lua
--- LSP servers are loaded on-demand based on file type.
-
-local vim = vim
-
 -- Create an autocommand group to ensure commands are cleared on reload
 local lsp_group = vim.api.nvim_create_augroup("OnDemandLsp", { clear = true })
 
@@ -11,19 +6,19 @@ local lsp_group = vim.api.nvim_create_augroup("OnDemandLsp", { clear = true })
 -- You can add buffer-local keymaps and other settings here.
 local function on_attach(client, bufnr)
     -- For example, uncomment these to set keymaps for LSP features
-    local nset  = vim.keymap.set
-    local lsp   = vim.lsp.buf
-    local opts  = {
+    local nset = vim.keymap.set
+    local lsp  = vim.lsp.buf
+    local opts = {
         buffer  = bufnr,
         noremap = true,
         silent  = true,
     }
 
-    nset("n", "K",          lsp.hover,          opts)
-    nset("n", "gd",         lsp.definition,     opts)
-    nset("n", "gi",         lsp.implementation, opts)
-    nset("n", "<leader>ca", lsp.code_action,    opts)
-    nset("n", "<leader>rn", lsp.rename,         opts)
+    nset("n", "K", lsp.hover, opts)
+    nset("n", "gd", lsp.definition, opts)
+    nset("n", "gi", lsp.implementation, opts)
+    nset("n", "<leader>ca", lsp.code_action, opts)
+    nset("n", "<leader>rn", lsp.rename, opts)
 end
 
 -- Helper function to start LSP client
@@ -51,70 +46,70 @@ end
 ---@param trigger string
 ---@return function
 local function mk_aucmd(trigger)
-    ---@param opts aucmdopts
+    ---@param opts vim.api.keyset.create_autocmd
     return function(opts)
         vim.api.nvim_create_autocmd(trigger, opts)
     end
 end
 
 --#region LSP
--- Lua
-mk_aucmd "FileType" {
-    group    = lsp_group,
-    pattern  = "lua",
-    callback = function()
-        start_lsp {
-            name       = "lua_ls",
-            cmd        = { "lua-language-server" },
-            root_files = { ".git", "lua" },
-        }
-    end,
-}
+vim.lsp.config('lua_ls', {
+    on_init = function(client)
+        if client.workspace_folders then
+            local path = client.workspace_folders[1].name
+            if
+                path ~= vim.fn.stdpath('config')
+                and (vim.uv.fs_stat(path .. '/.luarc.json') or vim.uv.fs_stat(path .. '/.luarc.jsonc'))
+            then return
+            end
+        end
 
--- Rust
-mk_aucmd "FileType" {
-    group = lsp_group,
-    pattern = "rust",
-    callback = function()
-        start_lsp {
-            name = "rust_analyzer",
-            cmd = { "rust-analyzer" },
-            root_files = { "Cargo.toml", ".git" },
-        }
-        vim.o.makeprg = "cargo build"
+        client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
+            runtime = {
+                -- Tell the language server which version of Lua you're using (most
+                -- likely LuaJIT in the case of Neovim)
+                version = 'LuaJIT',
+                -- Tell the language server how to find Lua modules same way as Neovim
+                -- (see `:h lua-module-load`)
+                path = {
+                    'lua/?.lua',
+                    'lua/?/init.lua',
+                },
+            },
+            -- Make the server aware of Neovim runtime files
+            workspace = {
+                checkThirdParty = false,
+                library = {
+                    vim.env.VIMRUNTIME
+                    -- Depending on the usage, you might want to add additional paths
+                    -- here.
+                    -- '${3rd}/luv/library'
+                    -- '${3rd}/busted/library'
+                }
+                -- Or pull in all of 'runtimepath'.
+                -- NOTE: this is a lot slower and will cause issues when working on
+                -- your own configuration.
+                -- See https://github.com/neovim/nvim-lspconfig/issues/3189
+                -- library = {
+                --   vim.api.nvim_get_runtime_file('', true),
+                -- }
+            }
+        })
     end,
-}
+    settings = {
+        Lua = {}
+    }
+})
 
--- Deno (JS/TS)
-mk_aucmd "FileType" {
-    group = lsp_group,
-    pattern = {
-        "javascript",
-        "typescript",
-        "javascriptreact",
-        "typescriptreact",
-    },
-    callback = function()
-        start_lsp {
-            name = "denols",
-            cmd = { "deno", "lsp" },
-            root_files = { "deno.json", ".git" },
-        }
-        vim.o.makeprg = "deno build"
-    end,
-}
-
--- C/C++
-mk_aucmd "FileType" {
-    group = lsp_group,
-    pattern = { "c", "cpp", "objc", "objcpp", "cuda" },
-    callback = function()
-        start_lsp {
-            name = "clangd",
-            cmd = { "clangd" },
-            root_files = { "compile_commands.json", ".git" },
-        }
-    end,
+vim.lsp.enable {
+    "bashls",
+    "clangd",
+    "docker_language_server",
+    "jsonls",
+    "lua_ls",
+    "rust_analyzer",
+    "sqls",
+    "ts_ls",
 }
 
 -- Racket
