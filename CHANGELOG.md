@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [unreleased]
+
+### 🐛 Bug Fixes
+
+- Remove duplicate vim.lsp.enable
+- Comment out lspconfig
+
+### 📚 Documentation
+
+- Update CHANGELOG.md
+
 ## [1.5.0] - 2025-08-08
 
 ### 🚀 Features

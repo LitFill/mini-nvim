@@ -1,7 +1,5 @@
----@diagnostic disable: undefined-global
-
 -- Konfigurasi opsi
-vim.g.mapleader = " " -- Set leader key ke spasi
+vim.g.mapleader      = " " -- Set leader key ke spasi
 vim.g.maplocalleader = " " -- Leader key lokal
 
 -- Opsi dasar
