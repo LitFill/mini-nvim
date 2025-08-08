@@ -18,9 +18,6 @@ add "rafamadriz/friendly-snippets"
 
 -- Colorschemes
 require "plugins.flexoki"
-require "plugins.neo-solarized"
--- require "plugins.catppuccin"
-require "plugins.lackluster"
 
 -- UI
 require "plugins.nvim-focus"
@@ -29,7 +26,6 @@ require "plugins.rainbow-delimiters"
 require "plugins.stay-centered"
 require "plugins.todo-comments"
 require "plugins.transparent"
-require "plugins.clock"
 require "plugins.colorizer"
 require "plugins.sqlua"
 require "plugins.csvview"
@@ -39,8 +35,6 @@ require "plugins.neogit"
 require "plugins.haskell-tools"
 require "plugins.ghcid"
 require "plugins.render-markdown"
--- require "plugins.lean"
--- require "plugins.lspconfig"
 
 -- Treesitter
 require "plugins.nvim-treesitter"

@@ -1,5 +1,3 @@
----@diagnostic disable: undefined-global, different-requires
-
 require "minis"
 
 require "options"
@@ -11,14 +9,6 @@ require "autocmds"
 require "myflexoki"
 
 vim.cmd "colorscheme flexoki"
-
-require "lackluster" .setup
-{ tweak_syntax =
-    { comment = "#dddddd"
-    }
-}
-
--- vim.cmd "colorscheme lackluster-mint"
 
 -- Plugin configurations
 require "nvim-treesitter.configs" .setup
