@@ -87,7 +87,5 @@ require  "sqlua"          .setup()
 -- LSP
 -- require "lspconfig" .setup()
 
-vim.lsp.enable "ts_ls"
-
 -- ensure this ↓ is the last line
 require "neovide"
