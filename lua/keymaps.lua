@@ -1,117 +1,78 @@
-local vim = vim
 local set = vim.keymap.set
 
----@param opts table
-local function nset(opts) end
-
--- --- add desc to opts for set
--- ---@param opts vim.keymap.set.Opts
--- ---@param desc string
--- ---@return vim.keymap.set.Opts
--- local d = function(opts, desc)
---     opts.desc = desc
---     return opts
--- end
+--- add desc to opts for set
+---
+---@param opts? vim.keymap.set.Opts
+---@param description string
+---@return vim.keymap.set.Opts
+local function desc(description, opts)
+    if not opts then return { desc = description } end
+    opts.desc = description
+    return opts
+end
 
 -- convenient
-set("n", "<leader>qw", "<cmd>wq<CR>", { desc = "save and quit" })
-set("n", "<Esc>", "<cmd>nohl<CR>", { silent = true })
+set("n", "<leader>qw", "<cmd>wq<CR>",   desc "save and quit")
+set("n", "<Esc>",      "<cmd>nohl<CR>", desc("No Highlight", { silent = true }))
 
-set("n", "<C-s>", "<cmd>write<CR>", { desc = "save" })
+set("n", "<C-s>",     "<cmd>write<CR>", desc "save")
+set("n", "<leader>w", "<cmd>write<CR>", desc "save")
 
-set({ "i", "v" }, "kj", "<Esc>", { desc = "exit to normal" })
+set({ "i", "v" }, "kj", "<Esc>", desc "exit to normal")
 
-set("n", "<leader>cd", "<cmd>Cd<CR>", { desc = "cd to this file dir" })
-
-set("n", "<leader>cd", "<cmd>Cd<CR>", { desc = "cd to this file dir" })
+set("n", "<leader>cd", "<cmd>Cd<CR>", desc "cd to this file dir")
 
 -- using makefile
-set("n", "<leader>mr", "<cmd>term make run<CR>", { desc = "(m)ake (r)un" })
-set("n", "<leader>mb", "<cmd>term make build<CR>", { desc = "(m)ake (b)uild" })
-set(
-    "n",
-    "<leader>mqb",
-    "<cmd>term make build<CR>a<CR>",
-    { desc = "quick build" }
-)
+set("n",  "<leader>mr",  "<cmd>term make run<CR>",        desc "(m)ake (r)un")
+set("n",  "<leader>mb",  "<cmd>term make build<CR>",      desc "(m)ake (b)uild")
+set( "n", "<leader>mqb", "<cmd>term make build<CR>a<CR>", desc "quick build")
 
---- fixed shift j
-set("n", "J", "mzJ`z")
-
---- non save delete
-set({ "n", "v" }, "<leader>d", [["_d]])
+set({ "n", "v" }, "J",         "mzJ`z", desc "shift+j but the cursor stay in place")
+set({ "n", "v" }, "<leader>d", '"_d',   desc "delete without saving to register")
 
 --- using fixlist
-set("n", "<C-k>", "<cmd>cnext<CR>zz")
-set("n", "<C-j>", "<cmd>cprev<CR>zz")
-set("n", "<leader>k", "<cmd>lnext<CR>zz")
-set("n", "<leader>j", "<cmd>lprev<CR>zz")
+set("n", "<C-k>",     "<cmd>cnext<CR>", desc "Next quickfix")
+set("n", "<C-j>",     "<cmd>cprev<CR>", desc "Previous quickfix")
+set("n", "<leader>k", "<cmd>lnext<CR>", desc "Next location")
+set("n", "<leader>j", "<cmd>lprev<CR>", desc "Previous location")
 
 set(
     "n",
     "<leader>rw",
     [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
-    { desc = "(r)eplace (w)ord" }
+    desc "(r)eplace (w)ord"
 )
 
 --- open MiniFiles
-set("n", "-", "<cmd>lua MiniFiles.open()<CR>", { desc = "Open parent dir" })
+set("n", "-", "<cmd>lua MiniFiles.open()<CR>", desc "Open parent dir")
 
-set(
-    "n",
-    "<leader>utr",
-    "<cmd>TransparentToggle<CR>",
-    { desc = "Toggle transparent background" }
-)
+-- toggle transparency
+set( "n", "<leader>utr", "<cmd>TransparentToggle<CR>", desc "Toggle transparent background")
 
 -- Terminal
-set("t", "<C-q>", "<C-\\><C-n>", { nowait = true })
-set(
-    "n",
-    "<leader>ot",
-    "<cmd>set nonumber norelativenumber | term<CR>a",
-    { desc = "(o)pen (t)erminal" }
-)
-set(
-    "n",
-    "<leader>vt",
-    "<cmd>vs | set nonumber norelativenumber | term<CR>a",
-    { desc = "(v)ertical pane (t)erminal" }
-)
-set(
-    "n",
-    "<leader>st",
-    "<cmd>sp | set nonumber norelativenumber | term<CR>a",
-    { desc = "(v)ertical pane (t)erminal" }
-)
+set("t", "<C-q>",      "<C-\\><C-n>",         desc("quit terminal", { nowait = true }))
+set("n", "<leader>ot", "<cmd>term<CR>a",      desc "(o)pen (t)erminal")
+set("n", "<leader>vt", "<cmd>vs | term<CR>a", desc "(v)ertical pane (t)erminal")
+set("n", "<leader>st", "<cmd>sp | term<CR>a", desc "(v)ertical pane (t)erminal")
 
 -- mini.pick
-set("n", "<leader>pb", "<cmd>Pick buffers<CR>", { desc = "(p)ick (b)uffers" })
-set("n", "<leader>pf", "<cmd>Pick files<CR>", { desc = "(p)ick (f)iles" })
-set("n", "<leader>ph", "<cmd>Pick help<CR>", { desc = "(p)ick (h)elp" })
-set("n", "<leader>:", "<cmd>Pick commands<CR>", { desc = "pick command" })
-set("n", "<leader>po", "<cmd>Pick options<CR>", { desc = "(p)ick (o)ption" })
+set("n", "<leader>pb", "<cmd>Pick buffers<CR>",  desc "(p)ick (b)uffers")
+set("n", "<leader>pf", "<cmd>Pick files<CR>",    desc "(p)ick (f)iles")
+set("n", "<leader>ph", "<cmd>Pick help<CR>",     desc "(p)ick (h)elp")
+set("n", "<leader>:",  "<cmd>Pick commands<CR>", desc "(p)ick (c)ommand")
+set("n", "<leader>po", "<cmd>Pick options<CR>",  desc "(p)ick (o)ption")
 
 -- NeoGit
-set("n", "<leader>gn", "<cmd>Neogit<CR>", { desc = "open NeoGit" })
+set("n", "<leader>gn", "<cmd>Neogit<CR>", desc "open NeoGit")
 
 -- LSP
-set(
-    "n",
-    "<leader>ca",
-    vim.lsp.buf.code_action,
-    { desc = "(c)ode (a)ction LSP" }
-)
-set("n", "<leader>rn", vim.lsp.buf.rename, { desc = "rename using lsp" })
-set(
-    "n",
-    "<leader>gd",
-    vim.lsp.buf.definition,
-    { desc = "go to definition LSP" }
-)
+local lsp_action = vim.lsp.buf
+set("n", "<leader>ca", lsp_action.code_action, desc "(c)ode (a)ction LSP")
+set("n", "<leader>rn", lsp_action.rename,      desc "rename using lsp")
+set("n", "<leader>gd", lsp_action.definition,  desc "go to definition LSP")
 
 -- --- Typst Preview
--- set("n", "<leader>tp", "<cmd>TypstPreviewToggle<CR>", { desc = "Toggle Typst Preview in browser" })
+-- set("n", "<leader>tp", "<cmd>TypstPreviewToggle<CR>", desc "Toggle Typst Preview in browser")
 
 -- --- Idris2 lsp
 -- local bufopts = { noremap = true }
