@@ -40,7 +40,7 @@ require "plugins.haskell-tools"
 require "plugins.ghcid"
 require "plugins.render-markdown"
 -- require "plugins.lean"
-require "plugins.lspconfig"
+-- require "plugins.lspconfig"
 
 -- Treesitter
 require "plugins.nvim-treesitter"
