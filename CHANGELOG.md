@@ -2,12 +2,21 @@
 
 All notable changes to this project will be documented in this file.
 
-## [unreleased]
+## [1.5.2] - 2025-08-08
+
+### 🚀 Features
+
+- *(keymaps)* Add descriptions and use desc helper
+- Update configs and changelog
 
 ### 🐛 Bug Fixes
 
 - Remove duplicate vim.lsp.enable
 - Comment out lspconfig
+
+### 🚜 Refactor
+
+- Remove unused colorschemes and plugins
 
 ### 📚 Documentation
 
