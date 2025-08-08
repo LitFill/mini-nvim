@@ -2,16 +2,25 @@
 
 All notable changes to this project will be documented in this file.
 
-## [unreleased]
+## [1.5.0] - 2025-08-08
 
 ### 🚀 Features
 
 - *(lean)* Set indentation to 4 spaces
 - *(lang)* Add support for lamb, laras, and simp
+- *(lsp)* Refactor lsp configs
+- *(plugins)* Add ghcid plugin
+- *(dev)* Add .luarc.json for lua-ls
+
+### 🚜 Refactor
+
+- *(config)* Misc config improvements
+- *(lsp)* Modularize lsp configuration
 
 ### 📚 Documentation
 
 - *(changelog)* Update
+- *(changelog)* Update for recent changes
 
 ## [1.1.0] - 2025-07-05
 
