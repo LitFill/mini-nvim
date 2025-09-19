@@ -8,7 +8,8 @@ require "autocmds"
 -- Colorscheme
 require "myflexoki"
 
-vim.cmd "colorscheme flexoki"
+-- vim.cmd "colorscheme flexoki"
+vim.cmd "colorscheme miniwinter"
 
 -- Plugin configurations
 require "nvim-treesitter.configs" .setup
@@ -62,17 +63,39 @@ end
 
 local parser_conf = require "nvim-treesitter.parsers" .get_parser_configs()
 
-parser_conf.laras = mk_parser_conf_proyek_dir "laras-ts"              "laras"
-parser_conf.simp  = mk_parser_conf_proyek_dir "tree-sitter-simp-lang" "simp"
-parser_conf.lamb  = mk_parser_conf_proyek_dir "tree-sitter-lamb"      "lamb"
+parser_conf.laras = mk_parser_conf_proyek_dir "laras-ts"                     "laras"
+parser_conf.simp  = mk_parser_conf_proyek_dir "tree-sitter-simp-lang"        "simp"
+parser_conf.lamb  = mk_parser_conf_proyek_dir "tree-sitter-lamb"             "lamb"
+parser_conf.lbnf  = mk_parser_conf_proyek_dir "third-party/tree-sitter-lbnf" "lbnf"
+
+vim.filetype.add { extension = { cf = "lbnf" } }
 
 require  "origami"        .setup()
 require  "todo-comments"  .setup()
-require  "stay-centered"  .setup()
 require  "colorizer"      .setup()
 require  "sqlua"          .setup()
 
+require  "stay-centered"  .setup
+{
+    skip_filetypes = {""},
+}
+
 -- require "lean"          .setup()
+
+-- Idris2
+
+require 'idris2'
+.setup {
+    client = {
+        hover = {
+            use_split         = true,    -- Persistent split instead of popups for hover
+            split_size        = '20%',   -- Size of persistent split, if used
+            auto_resize_split = true,    -- Should resize split to use minimum space
+            split_position    = 'right', -- bottom, top, left or right
+            with_history      = true,    -- Show history of hovers instead of only last
+        },
+    },
+}
 
 -- LSP
 -- require "lspconfig" .setup()

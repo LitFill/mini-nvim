@@ -35,6 +35,7 @@ require "plugins.neogit"
 require "plugins.haskell-tools"
 require "plugins.ghcid"
 require "plugins.render-markdown"
+require "plugins.idris2"
 
 -- Treesitter
 require "plugins.nvim-treesitter"

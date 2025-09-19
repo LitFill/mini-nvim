@@ -75,14 +75,15 @@ set("n", "<leader>gd", lsp_action.definition,  desc "go to definition LSP")
 -- set("n", "<leader>tp", "<cmd>TypstPreviewToggle<CR>", desc "Toggle Typst Preview in browser")
 
 -- --- Idris2 lsp
--- local bufopts = { noremap = true }
--- local cmd = [[:lua require("idris2.code_action")]]
--- set("n", "<leader>iev", [[:lua require("idris2.repl").evaluate()<CR>]], d(bufopts, "evaluate"))
--- set("n", "<leader>ics", cmd .. ".case_split()<CR>",   d(bufopts, "case split"))
--- set("n", "<leader>imc", cmd .. ".make_case()<CR>",    d(bufopts, "make case"))
--- set("n", "<leader>iml", cmd .. ".make_lemma()<CR>",   d(bufopts, "make lemma"))
--- set("n", "<leader>iac", cmd .. ".add_clause()<CR>",   d(bufopts, "add clause"))
--- set("n", "<leader>ies", cmd .. ".expr_search()<CR>",  d(bufopts, "search expression"))
--- set("n", "<leader>igd", cmd .. ".generate_def()<CR>", d(bufopts, "generate definition"))
--- set("n", "<leader>irh", cmd .. ".refine_hole()<CR>",  d(bufopts, "refine hole"))
--- set("n", "<leader>iin", cmd .. ".intro()<CR>",        d(bufopts, "intro"))
+local bufopts = { noremap = true }
+local cmd = [[:lua require("idris2.code_action")]]
+set("n", "<leader>iev", [[:lua require("idris2.repl").evaluate()<CR>]], desc("evaluate", bufopts))
+
+set("n", "<leader>ics", cmd .. ".case_split()<CR>",   desc("case split",          bufopts))
+set("n", "<leader>imc", cmd .. ".make_case()<CR>",    desc("make case",           bufopts))
+set("n", "<leader>iml", cmd .. ".make_lemma()<CR>",   desc("make lemma",          bufopts))
+set("n", "<leader>iac", cmd .. ".add_clause()<CR>",   desc("add clause",          bufopts))
+set("n", "<leader>ies", cmd .. ".expr_search()<CR>",  desc("search expression",   bufopts))
+set("n", "<leader>igd", cmd .. ".generate_def()<CR>", desc("generate definition", bufopts))
+set("n", "<leader>irh", cmd .. ".refine_hole()<CR>",  desc("refine hole",         bufopts))
+set("n", "<leader>iin", cmd .. ".intro()<CR>",        desc("intro",               bufopts))
