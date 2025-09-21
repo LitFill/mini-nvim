@@ -7,11 +7,9 @@ local function add(plugin)
     require("mini.deps").add(plugin)
 end
 
----@param modname string
 -- HACK: untuk tetap mendapakan completion untuk file plugins
-local require = function(modname)
-    add(require(modname))
-end
+---@param modname string
+local function require(modname) add(require(modname)) end
 
 add "echasnovski/mini.nvim"
 add "rafamadriz/friendly-snippets"

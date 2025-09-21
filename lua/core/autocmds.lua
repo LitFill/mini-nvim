@@ -47,18 +47,20 @@ local function mk_usercmd(name)
     end
 end
 
-local open_file_with_unison = function (opts)
+local open_file_with_unison = function(opts)
     local filename = opts.args
     local win = vim.api.nvim_get_current_win()
-    vim.cmd "vsplit"
-    vim.cmd "term ucm"
+    vim.cmd "vsplit | term ucm"
     vim.defer_fn(function()
         vim.api.nvim_set_current_win(win)
         vim.cmd("e " .. vim.fn.fnameescape(filename))
     end, 200)
 end
 
-mk_usercmd "WithUnison" (open_file_with_unison) { nargs = 1 }
+mk_usercmd "WithUnison" (open_file_with_unison) {
+    nargs = 1,
+    desc = "Open a unison file with lsp"
+}
 
 local signcolumnGroup =
     vim.api.nvim_create_augroup(
@@ -87,7 +89,10 @@ mk_aucmd "BufReadPost" {
     end,
 }
 
-mk_usercmd "Cd" "cd %:h" { nargs = 0, desc = "cd to current opened file" }
+mk_usercmd "Cd" "cd %:h" {
+    nargs = 0,
+    desc = "cd to current opened file"
+}
 
 mk_aucmd "BufEnter" {
     pattern = "*.csv",

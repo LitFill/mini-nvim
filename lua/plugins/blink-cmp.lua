@@ -1,5 +1,3 @@
-local vim = vim
-
 local function build_blink(params)
     vim.notify("Building blink.cmp", vim.log.levels.INFO)
     local obj = vim.system(
