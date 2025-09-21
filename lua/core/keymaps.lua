@@ -87,3 +87,11 @@ set("n", "<leader>ies", cmd .. ".expr_search()<CR>",  desc("search expression", 
 set("n", "<leader>igd", cmd .. ".generate_def()<CR>", desc("generate definition", bufopts))
 set("n", "<leader>irh", cmd .. ".refine_hole()<CR>",  desc("refine hole",         bufopts))
 set("n", "<leader>iin", cmd .. ".intro()<CR>",        desc("intro",               bufopts))
+
+-- Buffer management
+local bufopts2 = { noremap = true, silent = true }
+set('n', '<leader>ts', ':lua ToggleSplitDirection()<CR>',  desc("toggle split direction",  bufopts2))
+set('n', '<leader>bl', ':lua ListBuffers()<CR>',           desc("list buffers",            bufopts2))
+set('n', '<leader>bd', ':lua DeleteInactiveBuffers()<CR>', desc("delete inactive buffers", bufopts2))
+set('n', '<leader>bs', ':lua SwitchBuffer()<CR>',          desc("switch buffer",           bufopts2))
+set('n', '<leader>bw', ':lua WipeoutBuffers()<CR>',        desc("wipeout buffers",         bufopts2))

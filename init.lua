@@ -17,6 +17,5 @@ end
 
 require("mini.deps").setup { path = { package = path_package } }
 
-require "plugins"
-require "lsp"
-require "configs"
+require "config.lsp"
+require "config"

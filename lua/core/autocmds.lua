@@ -1,59 +1,25 @@
 -- Autocommands
 
 --- Helper function for making autocommands
----@param trigger string
----@return function
+---@param trigger string|string[]
+---@return fun(opts: vim.api.keyset.create_autocmd): integer
 local function mk_aucmd(trigger)
-    ---@param opts aucmdopts
+    ---@param opts vim.api.keyset.create_autocmd
     return function(opts)
-        vim.api.nvim_create_autocmd(trigger, opts)
+        return vim.api.nvim_create_autocmd(trigger, opts)
     end
 end
 
 mk_aucmd "BufWritePre" {
     pattern = "*",
-    callback = MiniTrailspace.trim,
+    callback = require("mini.trailspace").trim,
 }
 
-local function setup_haskell_keymaps()
-    local ht    = require "haskell-tools"
-    local bufnr = vim.api.nvim_get_current_buf()
-    local opt   = { buffer = bufnr }
-    local set   = vim.keymap.set
-
-    local nset = function(key, cmd, opts)
-        set("n", key, cmd, opts)
-    end
-
-    ---@param desc string
-    ---@return { buffer: number, desc: string}
-    local desc = function(desc)
-        opt.desc = desc
-        return opt
-    end
-
-    vim.o.makeprg = "cabal build"
-
-    -- Leader-c mappings untuk Cabal
-    nset("<Leader>cb", "<CMD>vs | term cabal build<CR>", desc "Cabal Build")
-    nset("<Leader>cr", "<CMD>vs | term cabal run<CR>",   desc "Cabal Run")
-    nset("<Leader>ct", "<CMD>vs | term cabal test<CR>",  desc "Cabal Test")
-    nset("<Leader>cc", "<CMD>edit *.cabal<CR>",          desc "Open Cabal File")
-    nset(
-        "<leader>ci",
-        "<CMD>vs | term cabal install --installdir=./bin --overwrite-policy=always<CR>",
-        desc "Cabal Install in bin directory"
-    )
-
-    -- Leader-h mappings untuk Haskell Tools
-    nset("<Leader>hh", ht.hoogle.hoogle_signature, desc "Hoogle Search")
-    nset("<Leader>hr", ht.repl.toggle,             desc "Toggle REPL")
-    nset("<Leader>ht", vim.lsp.buf.hover,          desc "Show Type Signature")
-end
+local haskell_config = require "config.haskell"
 
 mk_aucmd "FileType" {
     pattern = { "haskell", "cabal", "*.hs", "*.cabal" },
-    callback = setup_haskell_keymaps,
+    callback = haskell_config.setup_haskell_keymaps,
 }
 
 -- -- vim.api.nvim_create_autocmd("FileType", {
@@ -63,36 +29,25 @@ mk_aucmd "FileType" {
 --     end,
 -- })
 
-mk_aucmd "BufEnter" {
+mk_aucmd {"BufEnter", "BufWinEnter"} {
     pattern = "*",
     callback = function()
         vim.o.winbar = "%{%v:lua.GetShortPath()%}"
     end,
 }
 
----@return string
-function GetShortPath()
-    local buf_path = vim.api.nvim_buf_get_name(0)
-    if buf_path == "" then
-        return "" -- Jika buffer kosong, tidak tampilkan apa-apa
+--- Create a custom user command
+---@param name string
+---@return fun(command: string|fun(args: vim.api.keyset.create_user_command.command_args)):fun(opts: vim.api.keyset.user_command)
+local function mk_usercmd(name)
+    return function(command)
+        return function(opts)
+            vim.api.nvim_create_user_command(name, command, opts)
+        end
     end
-
-    local home = vim.fn.expand "$HOME"
-    local project_home = home .. "/proyek"
-
-    if buf_path:find("^" .. vim.pesc(project_home)) then
-        buf_path = buf_path:gsub("^" .. vim.pesc(project_home) .. "/", "")
-    elseif buf_path:find("^" .. vim.pesc(home)) then
-        buf_path = buf_path:gsub("^" .. vim.pesc(home) .. "/", "")
-    end
-
-    local display_path1 = buf_path:gsub("//", "/")
-    local display_path = display_path1:gsub("/", " -> ")
-
-    return "%#MiniIconsPurple#  LitFill :: " .. display_path
 end
 
-vim.api.nvim_create_user_command("WithUnison", function(opts)
+local open_file_with_unison = function (opts)
     local filename = opts.args
     local win = vim.api.nvim_get_current_win()
     vim.cmd "vsplit"
@@ -101,7 +56,9 @@ vim.api.nvim_create_user_command("WithUnison", function(opts)
         vim.api.nvim_set_current_win(win)
         vim.cmd("e " .. vim.fn.fnameescape(filename))
     end, 200)
-end, { nargs = 1 })
+end
+
+mk_usercmd "WithUnison" (open_file_with_unison) { nargs = 1 }
 
 local signcolumnGroup =
     vim.api.nvim_create_augroup(
@@ -130,7 +87,7 @@ mk_aucmd "BufReadPost" {
     end,
 }
 
-vim.api.nvim_create_user_command("Cd", [[cd %:h]], {})
+mk_usercmd "Cd" "cd %:h" { nargs = 0, desc = "cd to current opened file" }
 
 mk_aucmd "BufEnter" {
     pattern = "*.csv",
