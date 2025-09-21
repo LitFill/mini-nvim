@@ -57,6 +57,7 @@ function DeleteInactiveBuffers()
             vim.cmd('bdelete ' .. buf.bufnr)
         end
     end
+    print ""
     print 'Inactive buffers deleted'
 end
 

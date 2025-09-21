@@ -3,7 +3,7 @@
 --- Helper function for making autocommands
 ---@param trigger string|string[]
 ---@return fun(opts: vim.api.keyset.create_autocmd): integer
-local function mk_aucmd(trigger)
+local mk_aucmd = function(trigger)
     ---@param opts vim.api.keyset.create_autocmd
     return function(opts)
         return vim.api.nvim_create_autocmd(trigger, opts)
@@ -39,7 +39,7 @@ mk_aucmd {"BufEnter", "BufWinEnter"} {
 --- Create a custom user command
 ---@param name string
 ---@return fun(command: string|fun(args: vim.api.keyset.create_user_command.command_args)):fun(opts: vim.api.keyset.user_command)
-local function mk_usercmd(name)
+local mk_usercmd = function(name)
     return function(command)
         return function(opts)
             vim.api.nvim_create_user_command(name, command, opts)
