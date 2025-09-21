@@ -100,5 +100,63 @@ require 'idris2'
 -- LSP
 -- require "lspconfig" .setup()
 
+function ToggleSplitDirection()
+    if vim.fn.winnr('$') ~= 2 then
+        print("Error: Requires exactly two windows")
+        return
+    end
+    local win_pos1 = vim.fn.win_screenpos(1)
+    local win_pos2 = vim.fn.win_screenpos(vim.fn.winnr('$'))
+    if win_pos1[1] == win_pos2[1] then  -- Vertical split
+        if vim.fn.winnr() == 1 then
+            vim.cmd('wincmd K')
+        else
+            vim.cmd('wincmd J')
+        end
+    else  -- Horizontal split
+        if vim.fn.winnr() == 1 then
+            vim.cmd('wincmd H')
+        else
+            vim.cmd('wincmd L')
+        end
+    end
+end
+vim.keymap.set('n', '<leader>ts', ':lua ToggleSplitDirection()<CR>', { noremap = true, silent = true })
+
+function ListBuffers()
+    local buffers = vim.fn.getbufinfo()
+    for _, buf in ipairs(buffers) do
+        local mod = buf.changed == 1 and '[+]' or ''
+        print(buf.bufnr .. ': ' .. buf.name .. ' ' .. mod)
+    end
+end
+vim.keymap.set('n', '<leader>bl', ':lua ListBuffers()<CR>', { noremap = true, silent = true })
+
+function DeleteInactiveBuffers()
+    local buffers = vim.fn.getbufinfo()
+    for _, buf in ipairs(buffers) do
+        if buf.hidden == 1 and buf.changed == 0 then
+            vim.cmd('bdelete ' .. buf.bufnr)
+        end
+    end
+    print('Inactive buffers deleted')
+end
+vim.keymap.set('n', '<leader>bd', ':lua DeleteInactiveBuffers()<CR>', { noremap = true, silent = true })
+
+function SwitchBuffer()
+    local bufnum = vim.fn.input('Buffer number: ')
+    if tonumber(bufnum) and vim.fn.bufexists(tonumber(bufnum)) == 1 then
+        vim.cmd('buffer ' .. bufnum)
+    else
+        print(' Invalid buffer')
+    end
+end
+vim.keymap.set('n', '<leader>bs', ':lua SwitchBuffer()<CR>', { noremap = true, silent = true })
+
+function WipeoutBuffers()
+    vim.cmd('silent! %bdelete|edit #|normal `"')
+end
+vim.keymap.set('n', '<leader>bw', ':lua WipeoutBuffers()<CR>', { noremap = true, silent = true })
+
 -- ensure this ↓ is the last line
 require "neovide"
