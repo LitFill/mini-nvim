@@ -8,8 +8,10 @@ local function add(plugin)
 end
 
 -- HACK: untuk tetap mendapakan completion untuk file plugins
+-- it has to be an assignment not a function definition to
+-- avoid stack overflow from wrong recursion
 ---@param modname string
-local function require(modname) add(require(modname)) end
+local require = function(modname) add(require(modname)) end
 
 add "echasnovski/mini.nvim"
 add "rafamadriz/friendly-snippets"
