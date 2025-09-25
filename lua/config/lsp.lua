@@ -110,6 +110,7 @@ vim.lsp.enable {
     "rust_analyzer",
     "sqls",
     "ts_ls",
+    "nushell",
 }
 
 -- Racket
