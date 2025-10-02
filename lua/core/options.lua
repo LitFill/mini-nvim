@@ -15,6 +15,8 @@ vim.opt.cursorline    = true          -- Highlight baris kursor
 vim.opt.mouse         = "a"           -- Enable mouse
 vim.opt.clipboard     = "unnamedplus" -- Sync dengan clipboard sistem
 vim.opt.signcolumn    = "yes:2"       -- ensure 2 signcolumns
+vim.o.breakindent     = true
+vim.o.colorcolumn     = "80,120,200"
 
 -- Opsi khusus
 vim.opt.undofile = true -- Simpan undo history
