@@ -19,7 +19,7 @@ vim.o.breakindent     = true
 vim.o.colorcolumn     = "80,120,200"
 
 -- Opsi khusus
-vim.opt.undofile = true -- Simpan undo history
+vim.opt.undofile   = true -- Simpan undo history
 vim.opt.splitright = true -- Split vertical ke kanan
 vim.opt.splitbelow = true -- Split horizontal ke bawah
 vim.opt.foldmethod = "indent"
