@@ -117,3 +117,51 @@ mk_aucmd "BufEnter" {
         vim.cmd "CsvViewToggle display_mode=border header_lnum=1"
     end,
 }
+
+--- add desc to opts for set
+---
+---@param opts? vim.keymap.set.Opts
+---@param description string
+---@return vim.keymap.set.Opts
+local function desc(description, opts)
+    if not opts then return { desc = description } end
+    opts.desc = description
+    return opts
+end
+
+mk_aucmd { "BufRead", "BufNewFile" } {
+    pattern = "*.agda",
+    callback = function()
+        local map    = vim.keymap.set
+        local bufopt = { buffer = true }
+        local d = function(msg) desc(msg, bufopt) end
+
+        map('n', '<leader>l', ':CornelisLoad<CR>',             d "Cornelis: Load file"            )
+        map('n', '<leader>r', ':CornelisRefine<CR>',           d "Cornelis: Refine"               )
+        map('n', '<leader>d', ':CornelisMakeCase<CR>',         d "Cornelis: Case split"           )
+        map('n', '<leader>,', ':CornelisTypeContext<CR>',      d "Cornelis: Type and Context"     )
+        map('n', '<leader>.', ':CornelisTypeContextInfer<CR>', d "Cornelis: Type, Context, Infer" )
+        map('n', '<leader>s', ':CornelisSolve<CR>',            d "Cornelis: Solve goal"           )
+        map('n', '<leader>a', ':CornelisAuto<CR>',             d "Cornelis: Auto proof search"    )
+        map('n', 'gd',        ':CornelisGoToDefinition<CR>',   d "Cornelis: Go to Definition"     )
+        map('n', '[/',        ':CornelisPrevGoal<CR>',         d "Cornelis: Previous Goal"        )
+        map('n', ']/',        ':CornelisNextGoal<CR>',         d "Cornelis: Next Goal"            )
+        map('n', '<C-A>',     ':CornelisInc<CR>',              d "Cornelis: Increment"            )
+        map('n', '<C-X>',     ':CornelisDec<CR>',              d "Cornelis: Decrement"            )
+
+        mk_aucmd "BufWritePost" {
+            pattern = "*.agda",
+            command = "CornelisLoad",
+        }
+
+        vim.g.cornelis_agda_prefix    = "\\"
+        vim.g.cornelis_max_size       = 30
+        vim.g.cornelis_max_width      = 40
+        vim.g.cornelis_split_location = 'right'
+    end,
+}
+
+mk_aucmd "QuitPre"
+    { pattern = "*.agda"
+    , command = "CornelisCloseInfoWindows"
+    }
