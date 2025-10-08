@@ -15,9 +15,10 @@ vim.opt.cursorline    = true          -- Highlight baris kursor
 vim.opt.mouse         = "a"           -- Enable mouse
 vim.opt.clipboard     = "unnamedplus" -- Sync dengan clipboard sistem
 vim.opt.signcolumn    = "yes:2"       -- ensure 2 signcolumns
+vim.o.colorcolumn     = "80"
 
 -- Opsi khusus
-vim.opt.undofile = true -- Simpan undo history
+vim.opt.undofile   = true -- Simpan undo history
 vim.opt.splitright = true -- Split vertical ke kanan
 vim.opt.splitbelow = true -- Split horizontal ke bawah
 vim.opt.foldmethod = "indent"
