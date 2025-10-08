@@ -33,9 +33,10 @@ require "plugins.csvview"
 -- Tools
 require "plugins.neogit"
 require "plugins.haskell-tools"
--- require "plugins.ghcid"
 require "plugins.render-markdown"
 require "plugins.idris2"
+require "plugins.cornelis"  -- for Agda-mode
+-- require "plugins.ghcid"
 
 -- Treesitter
 require "plugins.nvim-treesitter"
