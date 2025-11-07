@@ -22,6 +22,7 @@ mk_aucmd "FileType" {
     callback = haskell_config.setup_haskell_keymaps,
 }
 
+
 -- -- vim.api.nvim_create_autocmd("FileType", {
 --     pattern = { "rust", "cargo", "*rs", "Cargo.toml" },
 --     callback = function()
@@ -148,6 +149,9 @@ mk_aucmd { "BufRead", "BufNewFile" } {
         map('n', ']/',        ':CornelisNextGoal<CR>',         d "Cornelis: Next Goal"            )
         map('n', '<C-A>',     ':CornelisInc<CR>',              d "Cornelis: Increment"            )
         map('n', '<C-X>',     ':CornelisDec<CR>',              d "Cornelis: Decrement"            )
+        -- Agda Reasoning
+        map("i", "<C-'>",     "≡⟨ ? ⟩\n?")
+        map("i", '<C-">',     "begin\n?\n≡⟨ ? ⟩\n?\n∎\nwhere open ≡-Reasoning")
 
         mk_aucmd "BufWritePost" {
             pattern = "*.agda",

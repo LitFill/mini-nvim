@@ -40,6 +40,7 @@ require "plugins.cornelis"  -- for Agda-mode
 
 -- Treesitter
 require "plugins.nvim-treesitter"
+require "plugins.kmonad"
 
 -- Completion
 require "plugins.blink-cmp"
